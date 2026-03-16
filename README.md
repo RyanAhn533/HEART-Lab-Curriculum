@@ -12,6 +12,8 @@
 |------|------|
 | [CURRICULUM.md](CURRICULUM.md) | 전체 커리큘럼 (Part 0~6, Top-down 구조) |
 | [WEEKLY_PLAN.md](WEEKLY_PLAN.md) | 12주 교육 계획, 주차별 숙제, 시험, 진도 추적표 |
+| [MASTERS_TRACK.md](MASTERS_TRACK.md) | 석사 과정생 트랙 — 논문 구현 & 커스터마이징 (3개월) |
+| [DIAGNOSTIC_TEST.md](DIAGNOSTIC_TEST.md) | 진단 테스트 — 부족한 영역 파악 + 보충 매핑 |
 | [MANUAL.md](MANUAL.md) | 교육 운영 매뉴얼 (교육자용) |
 | [worksheets/](worksheets/) | 체크포인트, 손코딩 연습, 문제풀이 15제 |
 
@@ -28,6 +30,14 @@
 | **Part 4** | 현대 아키텍처 | Seq2Seq, Attention, Transformer (손계산) |
 | **Part 5** | 실전 응용 | BERT 분류, API 챗봇 웹, YOLO 실시간 탐지 |
 | **Part 6** | 심화 | GAN, Detection 심화, 멀티모달 |
+
+### 석사 과정생 트랙 (신입생 12주 이후)
+
+| Month | 주제 | 핵심 |
+|-------|------|------|
+| **Month 1** | 논문 읽기 + 재현 기초 | 논문 요약, ResNet 재현, 실험 환경(wandb) |
+| **Month 2** | 논문 재현 + 커스터마이징 | 도메인 논문 Deep Dive, Ablation Study |
+| **Month 3** | 독립 연구 | 주제 설정 → 실험 → 논문 형태 정리 → 발표 |
 
 ---
 
