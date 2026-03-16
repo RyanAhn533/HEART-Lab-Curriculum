@@ -6,6 +6,17 @@
 
 ---
 
+## Documents
+
+| 문서 | 설명 |
+|------|------|
+| [CURRICULUM.md](CURRICULUM.md) | 전체 커리큘럼 (Part 0~6, Top-down 구조) |
+| [WEEKLY_PLAN.md](WEEKLY_PLAN.md) | 12주 교육 계획, 주차별 숙제, 시험, 진도 추적표 |
+| [MANUAL.md](MANUAL.md) | 교육 운영 매뉴얼 (교육자용) |
+| [worksheets/](worksheets/) | 체크포인트, 손코딩 연습, 문제풀이 15제 |
+
+---
+
 ## Overview
 
 | Part | 주제 | 핵심 |
