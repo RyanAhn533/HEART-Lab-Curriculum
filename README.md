@@ -6,160 +6,95 @@
 
 ---
 
-## Documents
-
-| 문서 | 설명 |
-|------|------|
-| [CURRICULUM.md](CURRICULUM.md) | 전체 커리큘럼 (Part 0~6, Top-down 구조) |
-| [WEEKLY_PLAN.md](WEEKLY_PLAN.md) | 12주 교육 계획, 주차별 숙제, 시험, 진도 추적표 |
-| [MASTERS_TRACK.md](MASTERS_TRACK.md) | 석사 과정생 트랙 — 논문 구현 & 커스터마이징 (3개월) |
-| [DIAGNOSTIC_TEST.md](DIAGNOSTIC_TEST.md) | 진단 테스트 — 부족한 영역 파악 + 보충 매핑 |
-| [MANUAL.md](MANUAL.md) | 교육 운영 매뉴얼 (교육자용) |
-| [worksheets/](worksheets/) | 체크포인트, 손코딩 연습, 문제풀이 15제 |
-
----
-
-## Overview
-
-| Part | 주제 | 핵심 |
-|------|------|------|
-| **Part 0** | 오리엔테이션 | 연구실 소개, 국책과제 구조, 진로, 공부법 |
-| **Part 1** | AI의 전체 그림 | AI 정의, 문제 해결 사고 흐름, 데모 |
-| **Part 2** | 학습의 원리 | 선형회귀, ANN, Chain Rule 역전파 (손계산) |
-| **Part 3** | 데이터 유형별 모델 | CNN (이미지), RNN (시계열), LSTM (장기 기억) |
-| **Part 4** | 현대 아키텍처 | Seq2Seq, Attention, Transformer (손계산) |
-| **Part 5** | 실전 응용 | BERT 분류, API 챗봇 웹, YOLO 실시간 탐지 |
-| **Part 6** | 심화 | GAN, Detection 심화, 멀티모달 |
-
-### 석사 과정생 트랙 (신입생 12주 이후)
-
-| Month | 주제 | 핵심 |
-|-------|------|------|
-| **Month 1** | 논문 읽기 + 재현 기초 | 논문 요약, ResNet 재현, 실험 환경(wandb) |
-| **Month 2** | 논문 재현 + 커스터마이징 | 도메인 논문 Deep Dive, Ablation Study |
-| **Month 3** | 독립 연구 | 주제 설정 → 실험 → 논문 형태 정리 → 발표 |
-
----
-
-## 핵심 사고 프레임워크
-
-모든 AI 문제는 이 순서로 접근한다:
+## 교육 과정 구조
 
 ```
-문제가 뭐지? → 데이터를 어떻게 쓰지? → 전처리는? → 어떤 모델? → 평가는?
+[입학/합류]
+    ↓
+[진단 테스트] ← 현재 수준 파악, 부족 영역 확인
+    ↓
+┌─────────────────────┐     ┌──────────────────────────┐
+│  undergraduate/      │     │  masters/                 │
+│  학석사 신입생 (12주)  │ ──→ │  석사 Condition (3개월)    │
+│                     │     │                          │
+│  모델 구현 능력      │     │  논문 구현+커스터마이징 능력 │
+│  매월 월간 발표      │     │  매월 월간 발표 (평가)     │
+└─────────────────────┘     └──────────────────────────┘
+    ↓                           ↓
+[과제 투입] ←───────────────────┘
 ```
-
-모델 이름을 많이 아는 게 실력이 아니다. **문제를 보고 풀이 방법이 바로 떠오르는 것**이 실력이다.
 
 ---
 
 ## 폴더 구조
 
 ```
-├── CURRICULUM.md                        # 전체 커리큘럼 문서 (필독)
+HEART-Lab-Curriculum/
 │
-├── Part0_orientation/                   # 연구실, 국책과제, 진로, 공부법
+├── README.md                ← 이 파일
+├── DIAGNOSTIC_TEST.md       ← 진단 테스트 (40문제, 부족 영역 → 보충 매핑)
+├── MANUAL.md                ← 교육 운영 매뉴얼 (교육자용)
 │
-├── Part2_learning_principle/            # 학습의 원리 (손계산 중심)
-│   ├── 2-1_linear_regression/           #   y=wx+b, Loss, Gradient Descent
-│   │   └── 01_linear_regression_numpy.py
-│   └── 2-2_ann/                         #   Perceptron, MLP, Chain Rule
-│       ├── 01_perceptron_numpy.py
-│       ├── 02_mlp_backprop_numpy.py
-│       └── 03_mlp_keras_pytorch.py
+├── undergraduate/           ← 학석사 신입생 교육 (12주)
+│   ├── README.md
+│   ├── CURRICULUM.md        ← 전체 커리큘럼 (Part 0~6, Top-down)
+│   ├── WEEKLY_PLAN.md       ← 12주 주차별 계획 + 숙제 + 시험 + 진도표
+│   ├── Part0_orientation/   ← 오리엔테이션
+│   ├── Part2_learning_principle/  ← 선형회귀, ANN (손계산)
+│   ├── Part3_data_models/   ← CNN, RNN, LSTM (손계산)
+│   ├── Part4_modern/        ← Seq2Seq, Attention, Transformer
+│   ├── Part5_practical/     ← BERT, 챗봇 웹, YOLO
+│   ├── Part6_advanced/      ← GAN, Detection 심화, 멀티모달
+│   └── worksheets/          ← 체크포인트, 손코딩 연습, 문제풀이 15제
 │
-├── Part3_data_models/                   # 데이터 유형별 모델
-│   ├── 3-1_cnn/                         #   이미지 → Convolution
-│   │   └── 01_convolution_numpy.py
-│   ├── 3-2_rnn/                         #   시계열 → Hidden State
-│   │   └── 01_rnn_numpy.py
-│   └── 3-3_lstm/                        #   기억력 문제 → Gate
-│       └── 01_lstm_gate_numpy.py
-│
-├── Part4_modern/                        # 현대 아키텍처
-│   ├── 4-1_seq2seq/                     #   Encoder-Decoder
-│   │   └── 01_seq2seq_numpy.py
-│   ├── 4-2_attention/                   #   QKV, Attention Heatmap
-│   │   └── 01_attention_numpy.py
-│   └── 4-3_transformer/                #   Self-Attention, Multi-Head
-│       └── 01_self_attention_numpy.py
-│
-├── Part5_practical/                     # 실전 응용 (과제 투입 스킬)
-│   ├── 5-1_text_classification/         #   BERT Fine-tuning
-│   │   └── 01_text_classification_huggingface.py
-│   ├── 5-2_chatbot_web/                #   API 챗봇 웹사이트
-│   │   ├── 01_chatbot_streamlit.py
-│   │   └── 02_chatbot_gradio.py
-│   └── 5-3_yolo/                       #   YOLOv8 실시간 탐지
-│       ├── 01_yolo_quickstart.py
-│       └── 02_yolo_custom_training.py
-│
-├── Part6_advanced/                      # 심화 (GAN, Detection, 멀티모달)
-│
-└── worksheets/                          # 연습장 & 체크리스트
-    ├── checkpoint_part2_3.md            #   Part 2~3 자기 점검표
-    ├── checkpoint_part4.md              #   Part 4 자기 점검표
-    ├── checkpoint_part5.md              #   Part 5 실전 테스트
-    ├── practice_handcoding.md           #   손코딩 연습 문제 (Level 1~6)
-    └── problem_solving_drill.md         #   "이 문제 어떻게 풀래?" 15문제
+└── masters/                 ← 석사 과정생 Condition (3개월)
+    ├── README.md
+    └── MASTERS_TRACK.md     ← 3개월 Condition + 월간 발표 + 평가
 ```
 
 ---
 
-## 교육 방법
+## 두 과정 비교
 
-### Top-down 학습
-
-매 단원은 이 흐름으로 진행:
-
-```
-이 모델이 풀려는 문제가 뭔지?
-    ↓
-이전 모델의 한계 → 이 모델의 해결
-    ↓
-데모로 동작 먼저 보기
-    ↓
-핵심 수식 이해
-    ↓
-손계산 (종이, 3~10 epoch)
-    ↓
-numpy 손코딩 (검증)
-    ↓
-Keras / PyTorch 구현
-    ↓
-다양한 데이터셋 실험
-    ↓
-체크포인트 확인
-```
-
-### 손계산 규칙
-
-1. 새 모델마다 **종이에 forward → loss → backward 최소 3 epoch**
-2. Chain Rule을 **수식으로** 완전히 전개
-3. 10 epoch까지 w, b 값 추적 → "학습이 되는 과정" 체감
-4. numpy로 검증 → 그 후에야 프레임워크 사용
-
-### 목표 수치
-
-| 태스크 | 목표 |
-|--------|------|
-| MNIST MLP accuracy | >= 97% |
-| CIFAR-10 CNN accuracy | >= 75% |
-| sin LSTM MSE | <= 0.01 |
-| IMDB BERT accuracy | >= 88% |
-| 커스텀 YOLO mAP50 | >= 0.7 |
+| | 학석사 신입생 (undergraduate) | 석사 Condition (masters) |
+|---|---|---|
+| **기간** | 12주 | 3개월 (12주) |
+| **목표** | 모델을 구현할 수 있다 | 논문을 구현하고 커스터마이징할 수 있다 |
+| **핵심 활동** | 손계산 → numpy → 프레임워크 | 논문 읽기 → 재현 → 수정 → 독립 연구 |
+| **평가** | W5 시험, W11 시험, W12 최종 발표 | 매월 월간 발표 (1차→2차→3차) |
+| **결과물** | 코드, 데모 | 실험 보고서, 논문 초고, 과제 기여 |
+| **통과 후** | 석사 트랙 or 과제 투입 | 정식 연구원으로 과제 투입 |
 
 ---
 
-## 사용 데이터셋
+## 월간 발표 제도
 
-| 유형 | 데이터셋 |
-|------|---------|
-| 정형 | Boston, California Housing, Iris, Wine, Diabetes, DACON |
-| 이미지 | MNIST, Fashion-MNIST, CIFAR-10/100, Cat vs Dog |
-| 텍스트 | IMDB, Reuters, 네이버 영화 리뷰, AG News |
-| 시계열 | Jena Climate, 주가, sin 함수 |
-| 객체탐지 | COCO, VOC, Roboflow 커스텀 |
+학부/석사 모두 **매달 랩미팅에서 발표**.
+
+| 대상 | 발표 시간 | 내용 |
+|------|----------|------|
+| 신입생 | 10분 | 이번 달 학습 현황 + 결과물 |
+| 석사 Condition | 15~25분 | 논문 재현/실험 진행 + 평가 |
+| 정식 연구원 | 15분 | 연구 진행 + 실험 결과 + 다음 달 계획 |
+
+---
+
+## Quick Start
+
+### 신입생이라면
+1. `DIAGNOSTIC_TEST.md`로 현재 수준 진단
+2. `undergraduate/CURRICULUM.md` 읽기
+3. `undergraduate/WEEKLY_PLAN.md` Week 1부터 시작
+
+### 석사 과정생이라면
+1. `DIAGNOSTIC_TEST.md`로 현재 수준 진단
+2. 부족한 부분이 있으면 `undergraduate/` 해당 Part 보충
+3. `masters/MASTERS_TRACK.md` Month 1부터 시작
+
+### 교육 담당자라면
+1. `MANUAL.md` 읽기
+2. `DIAGNOSTIC_TEST.md`로 학생 수준 파악
+3. 해당 과정으로 안내
 
 ---
 
