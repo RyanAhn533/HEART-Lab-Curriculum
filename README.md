@@ -114,9 +114,13 @@ Chapter 4: 딥러닝 입문 (TF2/Keras) ─── "신경망으로 확장한다"
 | **점프 투 파이썬** | [wikidocs.net/book/1](https://wikidocs.net/book/1) | 파이썬 기초 (사전 준비) |
 | **numpy/pandas/matplotlib 기초** | [wikidocs.net/32829](https://wikidocs.net/32829) | Chapter 1 데이터 도구 |
 | **데이터 분석 3종 패키지** | [wikidocs.net/21047](https://wikidocs.net/21047) | Chapter 1 데이터 도구 |
-| **딥러닝 파이토치 교과서** | [wikidocs.net/book/2788](https://wikidocs.net/book/2788) | Chapter 4 딥러닝 이후 |
-| **딥러닝을 이용한 자연어 처리 입문** | [wikidocs.net/book/2155](https://wikidocs.net/book/2155) | Chapter 7 NLP 이후 |
+| **파이썬으로 데이터 다루기 기초** | [wikidocs.net/book/9306](https://wikidocs.net/book/9306) | Chapter 1~2 numpy/pandas/sklearn |
 | **Python 강좌와 통계** | [wikidocs.net/book/15702](https://wikidocs.net/book/15702) | Chapter 1 통계 보충 |
+| **토닥토닥 sklearn 머신러닝** | [wikidocs.net/book/2383](https://wikidocs.net/book/2383) | Chapter 2~3 sklearn ML |
+| **인공지능(AI) & 머신러닝(ML) 사전** | [wikidocs.net/book/5942](https://wikidocs.net/book/5942) | 전체 용어/개념 참고 |
+| **토닥토닥 딥러닝 (텐서플로 v2)** | [wikidocs.net/book/4172](https://wikidocs.net/book/4172) | Chapter 4 딥러닝 |
+| **딥러닝 파이토치 교과서** | [wikidocs.net/book/2788](https://wikidocs.net/book/2788) | Chapter 10 PyTorch |
+| **딥러닝을 이용한 자연어 처리 입문** | [wikidocs.net/book/2155](https://wikidocs.net/book/2155) | Chapter 7 NLP |
 
 > 위키독스는 **무료**이고 **한국어**라 비전공자가 접근하기 좋다. 영상(3B1B)으로 직관 잡고, 위키독스로 코드 실습하는 조합 추천.
 
