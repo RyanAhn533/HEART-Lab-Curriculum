@@ -1,1 +1,29 @@
-ref_CES2024_NVIDIA.pptx
+# 대형 파일
+*.pptx
+*.docx
+*.pdf
+*.hdf5
+
+# 출력 이미지 (코드 실행하면 생성됨)
+*_output.png
+
+# 원본 학습 코드 (참고용, git 불필요)
+AI5-main/
+
+# 이전 버전
+_archive/
+
+# PPT 생성 스크립트
+make_*.py
+modify_*.py
+
+# 이미지 자산
+images/
+paper_figs/
+
+# 기타
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+presentation_outline.md
