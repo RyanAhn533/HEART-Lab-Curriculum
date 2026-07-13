@@ -222,6 +222,9 @@ from sklearn.preprocessing import StandardScaler
 
 **Phase 1은 수학 수업이 아니다.** 코드에서 만날 개념을 미리 직관적으로 이해시키는 것. 수식 전개 X, 그래프와 예시로 "아 이런 거구나" 수준.
 
+> ★ 단, 딥러닝 진입(Phase 2/Chapter 4) 직전에 **손계산 부트캠프**(`Chapter03_5_math_bootcamp/`)를 통과할 것.
+> 직관(영상)만으로 역전파를 넘으려던 학생이 미끄러지는 지점을 메우는 다리다. 진입 진단은 DIAGNOSTIC_TEST Section A.
+
 ### Phase 2: 돌려봐 (TF2/Keras)
 
 | 번호 | 주제 | AI5 대응 | 변화 포인트 |
@@ -489,6 +492,10 @@ HEART-Lab-Curriculum/
 ├── CURRICULUM_MASTER.md       ← 이 문서 (전체 설계)
 ├── DIAGNOSTIC_TEST.md         ← 진단 테스트 40문제
 ├── MANUAL.md                  ← 교육 운영 매뉴얼
+├── ROADMAP.md                 ← 학생용 전체 지도
+├── PAPER_GUIDE.md             ← 논문 7편 읽기 가이드
+├── Chapter03_5_math_bootcamp/ ← ★ 수학 손계산 부트캠프 (Ch.3→4 다리)
+├── worksheets/handcalc_*.md   ← CNN/RNN/LSTM 손계산 워크시트
 │
 ├── Phase00_why/               ← 왜 하는가 (문서 + PPT)
 ├── Phase01_foundations/       ← 통계/수학 기초 (문서 + 시각화 코드)

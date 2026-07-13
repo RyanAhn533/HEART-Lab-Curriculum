@@ -29,18 +29,22 @@
 ## 커리큘럼 구조
 
 ```
-Chapter 1: 통계와 데이터           ─── "데이터가 어떻게 생겼는지 본다"
-Chapter 2: 예측과 분류의 기초       ─── "직선으로 예측하고, 분류한다"
-Chapter 3: 머신러닝 모델들          ─── "다양한 모델을 배우고 비교한다"
-Chapter 4: 딥러닝 입문 (TF2/Keras) ─── "신경망으로 확장한다"
-                                   (Chapter 5~10 개발 중)
+Chapter 1:   통계와 데이터           ─── "데이터가 어떻게 생겼는지 본다"
+Chapter 2:   예측과 분류의 기초       ─── "직선으로 예측하고, 분류한다"
+Chapter 3:   머신러닝 모델들          ─── "다양한 모델을 배우고 비교한다"
+Chapter 3.5: 수학 근육 부트캠프 ★     ─── "역전파를 손으로 계산해 본다" (Ch.4의 벽 넘기)
+Chapter 4:   딥러닝 입문 (TF2/Keras) ─── "신경망으로 확장한다"
+                                     (Chapter 5~10 개발 중 — 손계산 워크시트는 worksheets/에 먼저 준비됨)
 ```
+
+> 전체 지도는 **[ROADMAP.md](ROADMAP.md)**, 논문 읽는 법은 **[PAPER_GUIDE.md](PAPER_GUIDE.md)** 참고.
 
 | Chapter | 주제 | 항목 수 | 프레임워크 |
 |---------|------|--------|-----------|
 | **1. 통계와 데이터** | 기술통계, 확률분포, EDA, 전처리 | 5개 | numpy, pandas |
 | **2. 예측과 분류** | 선형회귀, 경사하강법, 로지스틱, 평가지표 | 8개 | sklearn |
 | **3. 머신러닝** | 결정트리, RF, SVM, KNN, K-Means, PCA | 8개 | sklearn |
+| **3.5 수학 부트캠프** | 손계산: 미분, 연쇄법칙+계산그래프, 선형대수, XOR | 5개 | 종이 + numpy |
 | **4. 딥러닝** | 뉴런, 활성화, TF2 회귀/분류, EarlyStopping | 8개 | TF2/Keras |
 
 ---
@@ -53,8 +57,8 @@ Chapter 4: 딥러닝 입문 (TF2/Keras) ─── "신경망으로 확장한다"
 | **Week 2** | 상관분석 + 선형회귀 + 손실함수 + 경사하강법 | Ch.2 전반 (2-1 ~ 2-4) |
 | **Week 3** | 로지스틱 회귀 + 평가지표 + 과적합 | Ch.2 후반 (2-5 ~ 2-8) |
 | **Week 4** | 결정트리 + RF + SVM + KNN + 모델 비교 | Ch.3 전반 (3-1 ~ 3-5) |
-| **Week 5** | K-Means + PCA + ML 한계 → 딥러닝 이론 | Ch.3 후반 + Ch.4 이론 |
-| **Week 6** | TF2 실습 (회귀/이진분류/다중분류/EarlyStopping) | Ch.4 실습 (4-3 ~ 4-8) |
+| **Week 5** | K-Means + PCA + ML 한계 → **수학 부트캠프 (손계산)** | Ch.3 후반 + **Ch.3.5** |
+| **Week 6** | 부트캠프 캡스톤(XOR) + TF2 실습 (회귀/분류/EarlyStopping) | Ch.3.5 + Ch.4 실습 |
 | **Week 7** | 종합 복습 + 자유 프로젝트 + 최종 발표 | 종합 |
 
 ---
@@ -173,6 +177,15 @@ HEART-Lab-Curriculum/
 │   ├── 3-7_PCA              .md .py
 │   └── 3-8_ML한계_딥러닝필요성     .py
 │
+├── Chapter03_5_math_bootcamp/          ← ★ 수학 근육 부트캠프 (손계산)
+│   ├── README.md            ← 왜 있는가 + 진행법 (진단은 DIAGNOSTIC_TEST Section A)
+│   ├── B-1_미분과_최소화     .md
+│   ├── B-2_연쇄법칙_계산그래프 .md
+│   ├── B-3_선형대수          .md
+│   ├── B-4_확률통계          .md
+│   ├── B-5_캡스톤_손역전파_XOR .md .py
+│   └── ANSWERS.md           ← 교사용 답안
+│
 ├── Chapter04_deep_learning/            ← 딥러닝 (TF2/Keras)
 │   ├── 4-1_뉴런과_신경망     .md
 │   ├── 4-2_활성화함수        .md .py
@@ -181,6 +194,14 @@ HEART-Lab-Curriculum/
 │   ├── 4-5_이진분류_cancer       .py
 │   ├── 4-6_다중분류_iris/mnist   .py
 │   └── 4-8_EarlyStopping    .md .py
+│
+├── worksheets/                         ← 손계산 워크시트 (Ch.5~6 선행)
+│   ├── handcalc_CNN.md      ← Conv 출력크기·파라미터 수·MaxPool
+│   ├── handcalc_RNN_LSTM.md ← 언롤·기울기 소실·LSTM 게이트
+│   └── handcalc_ANSWERS.md  ← 교사용 답안
+│
+├── ROADMAP.md                          ← 전체 지도 (학생용)
+├── PAPER_GUIDE.md                      ← 논문 7편 읽기 가이드
 │
 ├── _archive/                           ← 이전 버전 (참고용)
 └── AI5-main/                           ← 원본 학습 코드
