@@ -1,12 +1,12 @@
 # ============================================
-# 1-11. 분류 손실함수 — BCE / CCE
+# 2-6. 분류 손실함수 — BCE / CCE
 #
 # 왜 배우는가:
 #   분류에서는 MSE 대신 Cross-Entropy를 쓴다.
 #   문제 유형 보고 loss를 선택하는 기준.
 #
 # 나중에 만나는 곳:
-#   → Phase 5~6: loss='binary_crossentropy' / 'categorical_crossentropy'
+#   → Chapter 4: loss='binary_crossentropy' / 'categorical_crossentropy'
 #
 # ▶ 보고 오기: StatQuest "Cross Entropy"
 #
@@ -50,15 +50,17 @@ for p in probs:                                        # 각 확률에 대해
 # ── 3. CCE 직접 계산 ─────────────────────
 print(f"\n[ Categorical Cross-Entropy 직접 계산 ]")
 
-def cce(y_true_onehot, y_pred_softmax):                # CCE 함수: 다중분류의 손실을 계산
+def cce(y_true_onehot, y_pred_softmax):                # CCE 함수: 다중분류의 손실을 계산 (샘플 1개 기준)
     epsilon = 1e-15                                    # log(0) 방지용 작은 수
     y_pred_softmax = np.clip(y_pred_softmax, epsilon, 1.0)  # 예측값을 epsilon 이상으로 제한
-    return -np.sum(y_true_onehot * np.log(y_pred_softmax)) / len(y_true_onehot)  # 정답 클래스의 -log(확률) 합 / 클래스 수
+    return -np.sum(y_true_onehot * np.log(y_pred_softmax))  # 표준 정의: 샘플별 CCE = -Σ y·log(p)
+    # ↑ 클래스 수로 나누면 안 됨! 배치(샘플 여러 개)일 때만 "샘플 수"로 평균을 낸다
 
 # 3클래스 (정답: 클래스 0)
 y_true_oh = np.array([1, 0, 0])                        # One-Hot 인코딩: 클래스 0이 정답 ([1,0,0])
 y_good_sm = np.array([0.85, 0.10, 0.05])              # 좋은 예측: 클래스 0에 높은 확률
 y_bad_sm = np.array([0.20, 0.50, 0.30])               # 나쁜 예측: 클래스 0에 낮은 확률
+# 검산: One-Hot이라 정답 클래스 항만 남는다 → CCE = -log(0.85) ≈ 0.163 이 나와야 정상
 
 print(f"One-Hot 실제:  {y_true_oh}")
 print(f"좋은 Softmax:  {y_good_sm} → CCE = {cce(y_true_oh, y_good_sm):.4f}")
@@ -115,13 +117,13 @@ for w in w_range:                                      # 각 w에 대해
     bce_val = -np.mean(y_data * np.log(p) + (1 - y_data) * np.log(1 - p))  # BCE 계산
     bce_surface.append(bce_val)                        # 결과 저장
 
-axes[1, 0].plot(w_range, mse_surface, 'r-', linewidth=2)  # MSE 손실 곡면 (빨간색, 울퉁불퉁)
-axes[1, 0].set_title('MSE Loss Surface (bumpy)')       # 제목: MSE는 울퉁불퉁 → 최적점 찾기 어려움
+axes[1, 0].plot(w_range, mse_surface, 'r-', linewidth=2)  # MSE 손실 곡면 (빨간색): 비볼록 + 양끝이 평평
+axes[1, 0].set_title('MSE Loss Surface (non-convex, flat tails)')  # 제목: sigmoid 포화 구간에서 기울기≈0 → 학습 매우 느림
 axes[1, 0].set_xlabel('w')                             # x축: 가중치
 axes[1, 0].set_ylabel('Loss')                          # y축: 손실
 
-axes[1, 1].plot(w_range, bce_surface, 'b-', linewidth=2)  # BCE 손실 곡면 (파란색, 매끄러움)
-axes[1, 1].set_title('BCE Loss Surface (smooth)')      # 제목: BCE는 매끄러움 → 경사하강법이 잘 작동
+axes[1, 1].plot(w_range, bce_surface, 'b-', linewidth=2)  # BCE 손실 곡면 (파란색, 볼록)
+axes[1, 1].set_title('BCE Loss Surface (convex)')      # 제목: BCE는 볼록 + 틀릴수록 기울기 큼 → 경사하강법이 잘 작동
 axes[1, 1].set_xlabel('w')                             # x축: 가중치
 axes[1, 1].set_ylabel('Loss')                          # y축: 손실
 
@@ -141,8 +143,30 @@ table.scale(1, 2)                                      # 표 세로 크기 2배
 axes[1, 2].set_title('Problem → Loss Mapping', pad=20)  # 제목 (pad: 제목과 표 사이 간격)
 
 plt.tight_layout()                                     # 그래프 간 간격 자동 조정
-plt.savefig('1-11_output.png', dpi=100)               # 이미지 파일로 저장
+plt.savefig('2-6_output.png', dpi=100)                # 이미지 파일로 저장
 plt.show()                                             # 화면에 표시
+
+# ── 6. 고리 닫기 — GD(2-4) + BCE(2-6) = 로지스틱 회귀(2-5) ──
+print(f"\n[ 고리 닫기: numpy 로지스틱 회귀 직접 구현 ]")
+np.random.seed(42)                                     # 난수 시드 고정
+X1 = np.concatenate([np.random.normal(-1, 1, 50),      # 클래스 0: 평균 -1 주변 50개
+                     np.random.normal(1, 1, 50)])       # 클래스 1: 평균 +1 주변 50개
+y1 = np.array([0]*50 + [1]*50)                          # 정답 라벨
+
+w1, b1, lr = 0.0, 0.0, 0.5                              # 초기 가중치/절편/학습률
+for epoch in range(2000):                               # GD 반복
+    p1 = sigmoid(w1 * X1 + b1)                          # 순전파: 선형회귀 + sigmoid = 확률
+    dw = np.mean((p1 - y1) * X1)                        # BCE를 w로 미분하면 (p-y)·x — 깔끔한 형태!
+    db = np.mean(p1 - y1)                               # BCE를 b로 미분하면 (p-y)
+    w1 -= lr * dw                                       # 2-4에서 배운 업데이트 공식 그대로
+    b1 -= lr * db
+
+from sklearn.linear_model import LogisticRegression     # 비교용 sklearn 모델
+sk = LogisticRegression(C=1e5).fit(X1.reshape(-1, 1), y1)  # C=1e5: 정규화를 거의 꺼서 순수 BCE 최소화와 비교
+acc_np = np.mean((sigmoid(w1 * X1 + b1) >= 0.5) == y1)  # numpy 구현의 정확도
+print(f"  numpy GD:  w={w1:.3f}, b={b1:.3f}, acc={acc_np:.3f}")
+print(f"  sklearn:   w={sk.coef_[0][0]:.3f}, b={sk.intercept_[0]:.3f}, acc={sk.score(X1.reshape(-1, 1), y1):.3f}")
+print(f"  → GD로 BCE를 최소화하면 로지스틱 회귀(2-5)가 된다")
 
 # ── 정리 ──────────────────────────────────
 print("\n" + "="*50)
@@ -151,5 +175,6 @@ print("  회귀 → MSE (loss='mse')")
 print("  이진분류 → BCE (loss='binary_crossentropy')")
 print("  다중분류 → CCE (loss='categorical_crossentropy')")
 print("  BCE는 확신하며 틀리면 페널티 극대화")
-print("  분류에 MSE 안 쓰는 이유: 손실 곡면이 울퉁불퉁")
+print("  분류에 MSE 안 쓰는 이유: 비볼록 + 포화 구간 기울기 소실")
+print("  GD(2-4) + BCE(2-6) = 로지스틱 회귀(2-5)")
 print("="*50)

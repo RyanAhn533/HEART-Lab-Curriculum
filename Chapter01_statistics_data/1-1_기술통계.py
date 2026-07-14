@@ -6,9 +6,9 @@
 #   기술통계는 데이터를 몇 개의 숫자로 요약하는 방법이다.
 #
 # 나중에 만나는 곳:
-#   → 1-5 스케일링: StandardScaler = (x - mean) / std
-#   → 1-4 이상치 처리: IQR 기준 제거
-#   → 1-3 EDA: pandas describe()
+#   → 1-6 스케일링: StandardScaler = (x - mean) / std
+#   → 1-5 이상치 처리: IQR 기준 제거
+#   → 1-4 EDA: pandas describe()
 #
 # ▶ 보고 오기: 구글 "기술통계 파이썬"
 #
@@ -112,6 +112,10 @@ df = pd.DataFrame({'score': scores})   # DataFrame: 엑셀 같은 표 형태로 
 
 print("\n[ pandas describe() — 실무에서는 이걸 쓴다 ]")
 print(df.describe())   # describe(): 평균, 표준편차, 사분위수 등을 한 번에 출력
+
+# ddof 비교 — np.std 기본은 n으로 나눔(ddof=0), describe()는 n-1로 나눔(ddof=1)
+print(f"\nnp.std (ddof=0, n으로 나눔):  {np.std(scores):.4f}")
+print(f"np.std (ddof=1, n-1로 나눔): {np.std(scores, ddof=1):.4f}  ← describe()의 std와 같은 값")
 
 # ── 정리 ──────────────────────────────────
 print("\n" + "="*50)

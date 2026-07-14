@@ -1,13 +1,13 @@
 # ============================================
-# 1-10. 로지스틱 회귀 (Logistic Regression)
+# 2-5. 로지스틱 회귀 (Logistic Regression)
 #
 # 왜 배우는가:
 #   분류 문제의 시작. 선형회귀 + Sigmoid = 분류 모델.
 #   모든 신경망 이진분류의 기초.
 #
 # 나중에 만나는 곳:
-#   → Phase 5~6: activation='sigmoid' / 'softmax'
-#   → 1-11: BCE (이진분류 손실함수)
+#   → Chapter 4: activation='sigmoid' / 'softmax'
+#   → 2-6: BCE (이진분류 손실함수)
 #
 # ▶ 보고 오기: Coursera C1W3 "Logistic Regression"
 #
@@ -51,7 +51,7 @@ model.fit(X_train, y_train)                            # fit: 데이터로 학�
 y_pred = model.predict(X_test)                         # predict: 테스트 데이터의 클래스(0 또는 1) 예측
 y_prob = model.predict_proba(X_test)[:, 1]             # predict_proba: 각 클래스일 확률 반환, [:, 1]은 양성(1)일 확률만 추출
 
-acc = accuracy_score(y_test, y_pred)                   # accuracy_score: 맞춘 개수 / 전체 개수
+acc = accuracy_score(y_test, y_pred)                   # accuracy_score: 정확도 = 전체 중 맞춘 비율. 자세한 평가지표는 2-7에서
 print(f"Accuracy: {acc:.4f}")
 print(f"예측 확률 (처음 5개): {y_prob[:5].round(3)}")  # 처음 5개 샘플의 양성 확률
 print(f"예측 클래스: {y_pred[:5]}")                    # 처음 5개의 예측 라벨
@@ -139,7 +139,7 @@ axes[1, 2].set_xlabel('Input')                         # x축: 입력
 axes[1, 2].set_ylabel('Output')                        # y축: 출력
 
 plt.tight_layout()                                     # 그래프 간 간격 자동 조정
-plt.savefig('1-10_output.png', dpi=100)               # 이미지 파일로 저장
+plt.savefig('2-5_output.png', dpi=100)               # 이미지 파일로 저장
 plt.show()                                             # 화면에 표시
 
 # ── 정리 ──────────────────────────────────
@@ -149,5 +149,5 @@ print("  로지스틱 회귀 = 선형회귀 + Sigmoid")
 print("  Sigmoid → 출력을 0~1 확률로 압축")
 print("  threshold 0.5 → 이진분류")
 print("  Softmax → 다중분류 (확률 합 = 1)")
-print("  → 이제 이 분류를 '평가'하는 방법이 필요 (1-12)")
+print("  → 이제 이 분류를 '평가'하는 방법이 필요 (2-7)")
 print("="*50)

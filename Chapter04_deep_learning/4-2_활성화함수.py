@@ -1,12 +1,13 @@
 # ============================================
-# 2-2. 활성화 함수 (Activation Functions)
+# 4-2. 활성화 함수 (Activation Functions)
 #
 # 왜 배우는가:
 #   활성화 없으면 레이어 쌓아도 선형.
 #   비선형 활성화가 있어야 복잡한 패턴 학습 가능.
 #
 # 나중에 만나는 곳:
-#   → 2-3~2-8: 은닉층 ReLU, 출력층 sigmoid/softmax
+#   → 4-3~4-8: 은닉층 ReLU, 출력층 sigmoid/softmax
+#   → tanh: RNN의 기본 활성화 (Chapter 6 예정)
 #
 # ▶ 보고 오기: 구글 "활성화 함수 종류 비교"
 #
@@ -34,6 +35,10 @@ def linear(x):
     """Linear: 입력을 그대로 출력. 활성화 없는 것과 같음. 회귀 출력층에 사용"""
     return x                                     # 아무 변환 없이 그대로 반환
 
+def tanh(x):
+    """Tanh: 어떤 값이든 -1~1 사이로 압축 (0 중심). tanh(x)=2σ(2x)−1. RNN(Chapter 6 예정)의 기본 활성화"""
+    return np.tanh(x)                            # numpy 내장 tanh 사용
+
 # ── 2. 시각화 ─────────────────────────────
 x = np.linspace(-5, 5, 200)                      # -5~5 사이를 200등분한 배열 생성 (그래프의 x축 데이터)
 
@@ -48,12 +53,15 @@ axes[0, 0].set_xlabel('x')                       # x축 라벨
 axes[0, 0].set_ylabel('ReLU(x)')                 # y축 라벨
 axes[0, 0].fill_between(x, relu(x), alpha=0.1, color='blue')  # ReLU 아래 영역을 연한 파란색으로 채움
 
-# Sigmoid
-axes[0, 1].plot(x, sigmoid(x), 'r-', linewidth=2)  # Sigmoid 함수를 빨간 실선으로 그림
+# Sigmoid vs Tanh (비교)
+axes[0, 1].plot(x, sigmoid(x), 'r-', linewidth=2, label='Sigmoid (0~1)')  # Sigmoid 함수를 빨간 실선으로 그림
+axes[0, 1].plot(x, tanh(x), 'm--', linewidth=2, label='Tanh (-1~1)')      # Tanh 곡선 추가 — 같은 S자지만 범위가 -1~1, 0 중심
 axes[0, 1].axhline(0.5, color='gray', linestyle='--', alpha=0.5)  # y=0.5 기준선 (분류 임계값)
-axes[0, 1].set_title('Sigmoid — Binary Output')  # 제목: Sigmoid는 이진분류 출력에 사용
+axes[0, 1].axhline(0, color='gray', linestyle=':', alpha=0.5)     # y=0 기준선 (tanh의 중심)
+axes[0, 1].set_title('Sigmoid vs Tanh')          # 제목: Sigmoid는 이진분류 출력, Tanh는 RNN 기본 활성화
 axes[0, 1].set_xlabel('x')
 axes[0, 1].set_ylabel('σ(x)')                    # σ(x)는 sigmoid 함수의 수학 표기
+axes[0, 1].legend(fontsize=8)                    # 두 곡선 구분용 범례
 
 # Linear (no activation)
 axes[0, 2].plot(x, linear(x), 'g-', linewidth=2) # Linear 함수를 초록 실선으로 그림 (y=x 직선)
@@ -103,7 +111,7 @@ table.scale(1, 2)                                 # 표 높이를 2배로 확대
 axes[1, 2].set_title('Activation Function Cheat Sheet', pad=20)  # 표 제목, pad=20으로 여백
 
 plt.tight_layout()                                # 그래프 간 겹침 방지 (자동 여백 조정)
-plt.savefig('2-2_output.png', dpi=100)            # 결과를 PNG 파일로 저장 (해상도 100dpi)
+plt.savefig('4-2_output.png', dpi=100)            # 결과를 PNG 파일로 저장 (해상도 100dpi)
 plt.show()                                        # 화면에 그래프 표시
 
 # ── 정리 ──────────────────────────────────
@@ -113,5 +121,6 @@ print("  은닉층 → ReLU (비선형성)")
 print("  출력층 회귀 → 없음 (linear)")
 print("  출력층 이진분류 → sigmoid (0~1)")
 print("  출력층 다중분류 → softmax (확률합=1)")
+print("  tanh → -1~1, RNN(Chapter 6 예정)의 기본 활성화")
 print("  활성화 없으면 레이어 쌓아도 선형!")
 print("="*50)

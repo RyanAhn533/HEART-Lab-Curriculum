@@ -1,14 +1,14 @@
 # ============================================
-# 2-4. 회귀 — Boston Housing
-# 이전(2-3)과 차이: #1에 실제 데이터셋 적용 (나머지 동일)
+# 4-4. 회귀 — California Housing
+# 이전(4-3)과 차이: #1에 실제 데이터셋 적용 (나머지 동일)
 #
 # 왜 배우는가:
-#   2-3의 뼈대가 실제 데이터에서도 그대로 동작하는지 확인.
-#   Phase 1-7 sklearn 선형회귀와 성능 비교.
+#   4-3의 뼈대가 실제 데이터에서도 그대로 동작하는지 확인.
+#   2-2 sklearn 선형회귀와 성능 비교.
 #
-# ▶ 보고 오기: 구글 "boston housing dataset 설명"
+# ▶ 보고 오기: 구글 "california housing dataset 설명"
 #
-# Ref: AI5 keras11_1_boston
+# Ref: AI5 keras11_1_boston (데이터셋은 California로 교체)
 # ============================================
 
 #0. 라이브러리 ──────────────────────────────
@@ -54,13 +54,11 @@ r2 = r2_score(y_test, y_pred)                         # R² 점수 계산
 print(f"\n[ 평가 ]")
 print(f"MSE: {loss:.4f}, R²: {r2:.4f}")               # 결과 출력
 
-# Phase 1-7 sklearn과 비교
+# 2-2 sklearn과 비교
 from sklearn.linear_model import LinearRegression     # LinearRegression: sklearn의 단순 선형회귀 모델
 lr = LinearRegression()                               # 선형회귀 모델 생성 (비교용)
-lr.fit(scaler.fit_transform(train_test_split(dataset.data, test_size=0.2, random_state=42)[0]),  # 학습 데이터로 피팅
-       train_test_split(dataset.target, test_size=0.2, random_state=42)[0])
-r2_lr = lr.score(scaler.transform(train_test_split(dataset.data, test_size=0.2, random_state=42)[1]),  # 테스트 데이터로 R² 계산
-                 train_test_split(dataset.target, test_size=0.2, random_state=42)[1])
+lr.fit(x_train, y_train)                              # #2에서 만든 동일한 분할·스케일 데이터 재사용 (재분할/scaler 재fit 금지 — 위에서 배운 원칙)
+r2_lr = lr.score(x_test, y_test)                      # 같은 테스트 데이터로 R² 계산 (공정한 비교)
 print(f"sklearn LinearRegression R²: {r2_lr:.4f}")    # sklearn 선형회귀 R² 출력
 print(f"TF2/Keras DNN R²: {r2:.4f}")                  # 딥러닝 모델 R² 출력
 print(f"→ {'DNN이 더 좋음' if r2 > r2_lr else 'Linear가 더 좋음 (데이터가 선형적)'}")  # 비교 결과

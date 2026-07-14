@@ -40,7 +40,7 @@ dL_dy  = 2 * (y - t)                  # dL/dy
 dL_dW2 = dL_dy * a1                   # dL/dW2 = dL/dy · dy/dW2
 dL_da1 = dL_dy * W2                   # 뒤로 전달
 dL_dz1 = dL_da1 * a1 * (1 - a1)       # σ' = σ(1−σ)
-dL_dW1 = np.outer(dL_dz1, x)          # dL/dW1
+dL_dW1 = np.outer(dL_dz1, x)          # dL/dW1 — 성분별로 dL/dW_ij = δ_i·x_j (B-3 외적 브리지)
 
 print(f"dL/dW2 = {np.round(dL_dW2, 4)}")
 print(f"dL/dW1 =\n{np.round(dL_dW1, 4)}")
@@ -78,7 +78,7 @@ W2 = rng.normal(0, 1.0, 2);      b2 = 0.0
 lr = 0.5
 for epoch in range(20000):
     # 순전파 (PART 1과 똑같은 계산, 데이터 4개 동시에)
-    Z1 = X @ W1.T + b1
+    Z1 = X @ W1.T + b1                # PART 1은 W1@x, 여기선 X@W1.T — 배치 처리라 (샘플,특성)×(특성,뉴런)로 전치됐을 뿐 같은 계산
     A1 = sigmoid(Z1)
     Y  = A1 @ W2 + b2
     # 역전파 (PART 1과 똑같은 연쇄법칙)

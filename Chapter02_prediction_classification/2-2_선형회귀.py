@@ -1,13 +1,13 @@
 # ============================================
-# 1-7. 선형회귀 (Linear Regression)
+# 2-2. 선형회귀 (Linear Regression)
 #
 # 왜 배우는가:
 #   ML의 시작 = "직선 하나로 예측".
 #   모든 신경망의 기본 구조가 선형회귀의 확장.
 #
 # 나중에 만나는 곳:
-#   → Phase 5: Dense(1) = 선형회귀와 같은 구조
-#   → 1-8: MSE = 잔차 제곱의 평균
+#   → Chapter 4: Dense(1) = 선형회귀와 같은 구조
+#   → 2-3: MSE = 잔차 제곱의 평균
 #
 # ▶ 보고 오기: Coursera C1W1 "Linear Regression"
 #
@@ -111,7 +111,7 @@ axes[1, 2].set_title('R² Score Comparison')           # 제목: R² 비교
 axes[1, 2].set_xlabel('R²')                           # x축: R² 값
 
 plt.tight_layout()                                    # 그래프 간 간격 자동 조정
-plt.savefig('1-7_output.png', dpi=100)               # 그래프를 이미지 파일로 저장
+plt.savefig('2-2_output.png', dpi=100)               # 그래프를 이미지 파일로 저장
 plt.show()                                            # 화면에 그래프 표시
 
 # ── 정리 ──────────────────────────────────

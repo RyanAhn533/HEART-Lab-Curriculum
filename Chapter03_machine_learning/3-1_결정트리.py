@@ -60,17 +60,24 @@ for name, imp in sorted(zip(data.feature_names, importance), key=lambda x: -x[1]
     print(f"  {name:20s}: {imp:.3f} {bar}")
 
 # ── 추가 분석: 깊이별 과적합 확인 ─────────
+# 최적 depth를 test로 고르면 test가 '한 번도 안 본 데이터'가 아니게 된다 (2-8 원칙 위반)
+# → train을 다시 train/val로 나눠 val 성능으로 고르고, test는 최종 성능 보고에만 쓴다
 print(f"\n[ 깊이별 과적합 확인 ]")
+x_tr, x_val, y_tr, y_val = train_test_split(
+    x_train, y_train, test_size=0.25, random_state=42  # train의 25%를 검증용(val)으로 분리 (depth 선택 전용)
+)
 depths = range(1, 15)                         # 트리 깊이를 1부터 14까지 바꿔가며 실험
-train_accs, test_accs = [], []                # 각 깊이별 훈련/테스트 정확도를 저장할 리스트
+train_accs, val_accs = [], []                 # 각 깊이별 훈련/검증 정확도를 저장할 리스트
 for d in depths:
     dt = DecisionTreeClassifier(max_depth=d, random_state=42)  # 깊이 d인 결정트리 생성
-    dt.fit(x_train, y_train)                                    # 훈련
-    train_accs.append(accuracy_score(y_train, dt.predict(x_train)))  # 훈련 데이터 정확도 (높을수록 과적합 가능성)
-    test_accs.append(accuracy_score(y_test, dt.predict(x_test)))     # 테스트 데이터 정확도 (실제 성능)
+    dt.fit(x_tr, y_tr)                                          # 훈련 (val을 뺀 나머지로)
+    train_accs.append(accuracy_score(y_tr, dt.predict(x_tr)))   # 훈련 데이터 정확도 (높을수록 과적합 가능성)
+    val_accs.append(accuracy_score(y_val, dt.predict(x_val)))   # 검증 데이터 정확도 (depth 선택 기준)
 
-best_depth = list(depths)[np.argmax(test_accs)]  # np.argmax: 테스트 정확도가 가장 높은 깊이 찾기
-print(f"최적 depth: {best_depth} (test acc={max(test_accs):.4f})")
+best_depth = list(depths)[np.argmax(val_accs)]  # np.argmax: 검증 정확도가 가장 높은 깊이 찾기
+best_dt = DecisionTreeClassifier(max_depth=best_depth, random_state=42).fit(x_train, y_train)  # 고른 depth로 전체 train 재학습
+final_acc = accuracy_score(y_test, best_dt.predict(x_test))     # test는 여기서 딱 한 번, 최종 성능 보고용
+print(f"최적 depth: {best_depth} (val acc={max(val_accs):.4f}) → 최종 test acc={final_acc:.4f}")
 
 # ── 시각화 ────────────────────────────────
 fig, axes = plt.subplots(2, 2, figsize=(16, 12))  # 2x2 격자로 4개 그래프 생성 / figsize: 전체 그림 크기 (가로 16, 세로 12 인치)
@@ -86,9 +93,9 @@ sorted_idx = np.argsort(importance)                   # argsort: 중요도 오�
 axes[0, 1].barh(np.array(data.feature_names)[sorted_idx], importance[sorted_idx], color='steelblue')  # barh: 수평 막대그래프 / color: 막대 색상
 axes[0, 1].set_title('Feature Importance')
 
-# (좌하) 깊이별 훈련/테스트 정확도 비교 (과적합 확인용)
+# (좌하) 깊이별 훈련/검증 정확도 비교 (과적합 확인용)
 axes[1, 0].plot(list(depths), train_accs, 'b-o', markersize=4, label='Train')   # 'b-o': 파란색 선+동그라미 / markersize: 점 크기 / label: 범례 텍스트
-axes[1, 0].plot(list(depths), test_accs, 'r-o', markersize=4, label='Test')     # 'r-o': 빨간색 선+동그라미
+axes[1, 0].plot(list(depths), val_accs, 'r-o', markersize=4, label='Val')       # 'r-o': 빨간색 선+동그라미 (depth 선택 기준은 val)
 axes[1, 0].axvline(best_depth, color='green', linestyle='--', alpha=0.5, label=f'Best={best_depth}')  # axvline: 수직선 / linestyle: 점선 / alpha: 투명도
 axes[1, 0].set_xlabel('max_depth')     # set_xlabel: x축 라벨
 axes[1, 0].set_ylabel('Accuracy')      # set_ylabel: y축 라벨

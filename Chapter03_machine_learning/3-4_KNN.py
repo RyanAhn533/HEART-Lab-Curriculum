@@ -46,27 +46,34 @@ print(f"Accuracy: {acc:.4f} (K=5)")
 print(f"\n{classification_report(y_test, y_pred, target_names=data.target_names)}")  # 품종별 상세 평가
 
 # K값별 성능
-print("[ K값별 성능 ]")
+# 최적 K를 test로 고르면 test가 '처음 보는 데이터'가 아니게 된다 (2-8 원칙 위반)
+# → train을 다시 train/val로 나눠 val 성능으로 고르고, test는 최종 보고에만 쓴다
+print("[ K값별 성능 (val 기준) ]")
+x_tr, x_val, y_tr, y_val = train_test_split(
+    x_train, y_train, test_size=0.25, random_state=42  # train의 25%를 검증용(val)으로 분리 (K 선택 전용)
+)
 k_range = range(1, 21)                       # K를 1부터 20까지 바꿔가며 실험
-k_accs = []                                   # 각 K별 정확도 저장
+k_accs = []                                   # 각 K별 검증 정확도 저장
 for k in k_range:
-    knn = KNeighborsClassifier(n_neighbors=k).fit(x_train, y_train)  # K값을 바꿔가며 학습
-    k_accs.append(accuracy_score(y_test, knn.predict(x_test)))       # 각 K의 정확도 저장
+    knn = KNeighborsClassifier(n_neighbors=k).fit(x_tr, y_tr)  # K값을 바꿔가며 학습 (val을 뺀 나머지로)
+    k_accs.append(accuracy_score(y_val, knn.predict(x_val)))    # 각 K의 검증 정확도 저장
     if k <= 10:
         print(f"  K={k:2d}: {k_accs[-1]:.4f}")  # K=1~10 결과 출력
 
-best_k = list(k_range)[np.argmax(k_accs)]    # np.argmax: 정확도가 가장 높은 K값 찾기
-print(f"\n최적 K: {best_k} (acc={max(k_accs):.4f})")
+best_k = list(k_range)[np.argmax(k_accs)]    # np.argmax: 검증 정확도가 가장 높은 K값 찾기
+best_knn = KNeighborsClassifier(n_neighbors=best_k).fit(x_train, y_train)  # 고른 K로 전체 train 재학습
+final_acc = accuracy_score(y_test, best_knn.predict(x_test))    # test는 여기서 딱 한 번, 최종 성능 보고용
+print(f"\n최적 K: {best_k} (val acc={max(k_accs):.4f}) → 최종 test acc={final_acc:.4f}")
 
 # ── 시각화 ────────────────────────────────
 fig, axes = plt.subplots(1, 3, figsize=(15, 4))  # 1x3 격자로 3개 그래프 / figsize: 가로 15, 세로 4 인치
 
-# (좌) K값에 따른 정확도 변화
+# (좌) K값에 따른 검증 정확도 변화
 axes[0].plot(list(k_range), k_accs, 'b-o', markersize=5)  # 'b-o': 파란색 선+동그라미 / markersize: 점 크기
 axes[0].axvline(best_k, color='red', linestyle='--', label=f'Best K={best_k}')  # axvline: 최적 K에 수직선 표시
 axes[0].set_xlabel('K')           # x축: K값
-axes[0].set_ylabel('Accuracy')    # y축: 정확도
-axes[0].set_title('K vs Accuracy')  # K가 너무 작으면 과적합, 너무 크면 과소적합
+axes[0].set_ylabel('Val Accuracy')  # y축: 검증 정확도 (K 선택 기준)
+axes[0].set_title('K vs Val Accuracy')  # K가 너무 작으면 과적합, 너무 크면 과소적합
 axes[0].legend()                   # 범례 표시
 
 def plot_knn(ax, k, X, y, title):

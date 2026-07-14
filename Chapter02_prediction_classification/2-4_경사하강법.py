@@ -1,13 +1,13 @@
 # ============================================
-# 1-9. 경사하강법 (Gradient Descent)
+# 2-4. 경사하강법 (Gradient Descent)
 #
 # 왜 배우는가:
 #   손실(MSE)을 줄이는 방법.
 #   모든 딥러닝 학습의 핵심 원리.
 #
 # 나중에 만나는 곳:
-#   → Phase 5: optimizer='adam'
-#   → Phase 10: ReduceLROnPlateau
+#   → Chapter 4: optimizer='adam'
+#   → 후속 챕터: ReduceLROnPlateau
 #
 # ▶ 보고 오기: 3B1B "Gradient descent" (필수!)
 #
@@ -119,7 +119,7 @@ axes[1, 2].set_ylabel('y')                             # y축
 axes[1, 2].legend()                                    # 범례
 
 plt.tight_layout()                                     # 그래프 간 간격 자동 조정
-plt.savefig('1-9_output.png', dpi=100)                # 이미지 파일로 저장
+plt.savefig('2-4_output.png', dpi=100)                # 이미지 파일로 저장
 plt.show()                                             # 화면에 표시
 
 # ── 정리 ──────────────────────────────────

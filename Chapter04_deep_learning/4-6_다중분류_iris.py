@@ -1,10 +1,10 @@
 # ============================================
-# 2-6. 다중분류 — Iris (Softmax + CCE + OneHot)
-# 이전(2-5)과 차이: #3에 softmax, #2에 to_categorical
+# 4-6. 다중분류 — Iris (Softmax + CCE + OneHot)
+# 이전(4-5)과 차이: #3에 softmax, #2에 to_categorical
 #
 # 왜 배우는가:
 #   이진(2개) → 다중(3개 이상) 분류.
-#   Phase 1-10 softmax를 DNN으로 확장.
+#   2-5 softmax를 DNN으로 확장.
 #
 # ▶ 보고 오기: Coursera C2W2 "Multiclass Classification"
 #
@@ -75,3 +75,9 @@ print(f"\n{classification_report(y_test, y_pred, target_names=dataset.target_nam
 print(f"Softmax 출력 (처음 3개):")
 for i in range(3):                                    # softmax 확률과 예측/실제 클래스 비교
     print(f"  {y_pred_prob[i].round(3)} → 클래스 {y_pred[i]} (실제: {y_test[i]})")
+
+# ── 참고: sparse_categorical_crossentropy ──
+# OneHot을 생략하는 버전. 정수 라벨(0,1,2)을 그대로 넣는다:
+#   model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+#   model.fit(x_train, y_train, ...)     # to_categorical 불필요, y_test도 그대로
+# 계산 결과는 CCE와 동일 — 밖에서 만나는 코드 절반이 이걸 쓴다.

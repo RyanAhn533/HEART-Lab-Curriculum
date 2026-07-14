@@ -1,5 +1,11 @@
 # HEART Lab AI Curriculum — Master Document
 
+> **⚠️ 이 문서는 장기 설계(Phase 0~10 전체 비전)다.**
+> **현행 운영은 ROADMAP.md의 8주 체계(5주 커리큘럼 + 3주 프로젝트)를 따른다.**
+> 현재 저장소에 실재하는 콘텐츠는 Chapter 1~4 + 부트캠프 + worksheets이고,
+> 이 문서의 Phase 5~10은 3개월차 이후 확장 시의 설계 참고용이다.
+> 평가·관문은 CHECKPOINTS.md가 단일 기준이다.
+
 ---
 
 ## 1. 교육 이념
@@ -486,39 +492,35 @@ from sklearn.preprocessing import StandardScaler
 
 ## 9. 폴더 구조
 
+### 현재 실재하는 구조 (git)
+
 ```
 HEART-Lab-Curriculum/
-├── README.md                  ← 전체 소개
-├── CURRICULUM_MASTER.md       ← 이 문서 (전체 설계)
+├── README.md                  ← 전체 소개 + 환경 설정
+├── ROADMAP.md                 ← 학생용 지도 + 8주 스케줄 (현행 운영 기준)
+├── CHECKPOINTS.md             ← 관문(GATE)·시험·프로젝트 스펙
 ├── DIAGNOSTIC_TEST.md         ← 진단 테스트 40문제
-├── MANUAL.md                  ← 교육 운영 매뉴얼
-├── ROADMAP.md                 ← 학생용 전체 지도
 ├── PAPER_GUIDE.md             ← 논문 7편 읽기 가이드
-├── Chapter03_5_math_bootcamp/ ← ★ 수학 손계산 부트캠프 (Ch.3→4 다리)
-├── worksheets/handcalc_*.md   ← CNN/RNN/LSTM 손계산 워크시트
+├── MANUAL.md                  ← 교육 운영 매뉴얼
+├── CURRICULUM_MASTER.md       ← 이 문서 (장기 설계)
 │
-├── Phase00_why/               ← 왜 하는가 (문서 + PPT)
-├── Phase01_foundations/       ← 통계/수학 기초 (문서 + 시각화 코드)
-├── Phase02_get_started/       ← 돌려봐
-├── Phase03_debugging/         ← 왜 안 되지?
-├── Phase04_save_structure/    ← 저장, 구조
-├── Phase05_image/             ← CNN
-├── Phase06_timeseries/        ← RNN/LSTM
-├── Phase07_nlp/               ← NLP
-├── Phase08_optimization/      ← 성능 올리기
-├── Phase09_ml/                ← ML 기본기
-├── Phase10_pytorch/           ← PyTorch + 논문 재현
-│
-├── worksheets/
-│   ├── checkpoint_1.md        ← Phase 3 끝
-│   ├── checkpoint_2.md        ← Phase 6 끝
-│   └── final_project.md      ← 최종 프로젝트
-│
-└── AI5-main/                  ← 원본 학습 코드 (참고용)
-    ├── keras/
-    ├── keras2/
-    ├── ml/
-    └── torch/
+├── Chapter01_statistics_data/          ← 통계 + 데이터 (1-1~1-6)
+├── Chapter02_prediction_classification/ ← 예측 + 분류 (2-1~2-8)
+├── Chapter03_machine_learning/         ← 머신러닝 (3-1~3-8)
+├── Chapter03_5_math_bootcamp/          ← ★ 수학 손계산 부트캠프 (B-1~B-5)
+├── Chapter04_deep_learning/            ← 딥러닝 TF2 (4-1~4-8)
+└── worksheets/handcalc_*.md            ← CNN/RNN/LSTM 손계산 (Ch5~6 대행)
+```
+
+### 확장 시 추가될 구조 (Phase 5~10 개발 후)
+
+```
+├── Chapter05_image/           ← CNN (현재 worksheets + AI5 keras35~50으로 대행)
+├── Chapter06_timeseries/      ← RNN/LSTM (현재 worksheets + AI5 keras51~63으로 대행)
+├── Chapter07_nlp/             ← NLP
+├── Chapter08_optimization/    ← 성능 올리기, 전이학습
+├── Chapter09_ml_advanced/     ← 앙상블, 튜닝 심화
+└── Chapter10_pytorch/         ← PyTorch + 논문 재현
 ```
 
 ---

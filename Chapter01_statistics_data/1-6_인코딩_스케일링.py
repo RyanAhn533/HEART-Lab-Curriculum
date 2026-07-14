@@ -1,13 +1,13 @@
 # ============================================
-# 1-5. 인코딩 / 스케일링
+# 1-6. 인코딩 / 스케일링
 #
 # 왜 배우는가:
 #   모델은 숫자만 받는다. 범주형은 인코딩, 연속형은 스케일링.
 #   스케일링 안 하면 큰 숫자에 모델이 끌려간다.
 #
 # 나중에 만나는 곳:
-#   → 모든 Phase의 #2: 전처리 필수
-#   → 1-11 다중분류: One-Hot Encoding
+#   → 모든 Chapter의 #2: 전처리 필수
+#   → 2-6 다중분류: One-Hot Encoding
 #
 # ▶ 보고 오기: Coursera C1W2 "Feature Scaling"
 #
@@ -89,6 +89,7 @@ from sklearn.model_selection import train_test_split  # 데이터를 학습용/�
 
 X_train, X_test = train_test_split(data, test_size=0.2, random_state=42)
 # ↑ test_size=0.2→20%는 테스트, 80%는 학습용. random_state=재현성 보장
+# ↑ 왜 나누나: 모델의 목표는 "새 데이터"를 맞추는 것 → 학습에 안 쓴 데이터로 평가해야 함 (원리는 2-8 과적합에서)
 scaler = StandardScaler()         # StandardScaler 사용
 
 # 올바른 방법 — train 데이터만으로 기준을 정하고, test도 같은 기준으로 변환
@@ -120,7 +121,7 @@ for i, (name, result) in enumerate(results.items()):  # 3개 스케일러 결과
     axes[1, i].set_title(f'{name}: income')  # 제목: 스케일러 이름 + income
 
 plt.tight_layout()               # 차트 간 간격 자동 조정
-plt.savefig('1-5_output.png', dpi=100)  # 이미지 파일로 저장. dpi=해상도
+plt.savefig('1-6_output.png', dpi=100)  # 이미지 파일로 저장. dpi=해상도
 plt.show()                       # 화면에 그래프 표시
 
 # ── 정리 ──────────────────────────────────

@@ -1,13 +1,13 @@
 # ============================================
-# 1-6. 상관분석 (Correlation Analysis)
+# 2-1. 상관분석 (Correlation Analysis)
 #
 # 왜 배우는가:
 #   "이 특성(X)이 결과(Y)와 관련이 있는가?"
 #   관련 없는 특성을 넣으면 모델 성능이 떨어진다.
 #
 # 나중에 만나는 곳:
-#   → 1-7 선형회귀: 상관 높은 특성으로 예측
-#   → Phase 11 Feature Importance: 특성 선택
+#   → 2-2 선형회귀: 상관 높은 특성으로 예측
+#   → 후속 챕터 Feature Importance: 특성 선택
 #
 # ▶ 보고 오기: StatQuest "Correlation"
 #
@@ -31,7 +31,8 @@ corr_with_price = corr_matrix['Price'].drop('Price').sort_values(ascending=False
 
 print("[ Price와의 상관계수 (Pearson) ]")
 for col, val in corr_with_price.items():             # 각 특성과 Price의 상관계수를 하나씩 꺼냄
-    strength = "강함" if abs(val) > 0.4 else "약함" if abs(val) > 0.2 else "거의 없음"  # 상관계수 절댓값으로 강도 판정
+    strength = "강함" if abs(val) > 0.7 else "중간" if abs(val) > 0.4 else "약함" if abs(val) > 0.2 else "거의 없음"
+    # ↑ 강도 판정 기준: |r|>0.7 강함, |r|>0.4 중간, |r|>0.2 약함, 그 이하 거의 없음
     print(f"  {col:12s}: {val:+.3f}  ({strength})")  # 특성 이름, 상관계수, 강도를 출력
 
 # ── 3. 상관 ≠ 인과 예시 ──────────────────
@@ -40,7 +41,19 @@ print("  Latitude와 Price 상관 = -0.14")
 print("  → 위도가 가격을 결정하는 게 아니라,")
 print("  → 특정 위도(LA, SF)에 비싼 집이 많은 것")
 
-# ── 4. 시각화 ─────────────────────────────
+# ── 4. Spearman & 상관 0 ≠ 무관계 ────────
+print("\n[ Spearman — 순위 기반 상관 ]")
+spearman_price = df.corr(method='spearman')['Price'].drop('Price')  # method='spearman': 값 대신 순위(rank)로 계산 — 곡선·이상치에 강함
+print(f"  MedInc: Pearson={corr_with_price['MedInc']:+.3f}, Spearman={spearman_price['MedInc']:+.3f}")
+
+print("\n[ 상관 0 ≠ 관계 없음 ]")
+x_curve = np.linspace(-3, 3, 100)                     # -3~3 사이 100개 점
+y_curve = x_curve ** 2                                 # y = x²: 완벽한 관계 (포물선)
+r_curve = np.corrcoef(x_curve, y_curve)[0, 1]          # Pearson 상관계수 계산
+print(f"  y = x² 인데 r = {r_curve:.3f}")
+print(f"  → 직선 관계가 아니면 Pearson이 못 잡는다. scatter를 꼭 그려볼 것")
+
+# ── 5. 시각화 ─────────────────────────────
 fig, axes = plt.subplots(2, 3, figsize=(15, 9))      # 2행 3열 = 6개 그래프 영역 생성, 전체 크기 15x9인치
 
 # 상관 heatmap
@@ -86,14 +99,15 @@ r_rand = np.corrcoef(x_rand, y_rand)[0, 1]           # corrcoef: 두 변수 간 
 axes[1, 2].set_title(f'No Correlation (r={r_rand:.3f})')  # 제목에 거의 0인 상관계수 표시
 
 plt.tight_layout()                                    # tight_layout: 그래프 간 간격을 자동 조정해서 겹침 방지
-plt.savefig('1-6_output.png', dpi=100)               # savefig: 그래프를 PNG 파일로 저장 (dpi=100: 해상도)
+plt.savefig('2-1_output.png', dpi=100)               # savefig: 그래프를 PNG 파일로 저장 (dpi=100: 해상도)
 plt.show()                                            # show: 화면에 그래프 표시
 
 # ── 정리 ──────────────────────────────────
 print("\n" + "="*50)
 print("핵심 정리:")
 print("  상관계수 = -1 ~ +1 (관계의 방향과 강도)")
-print("  |r| > 0.4 → 쓸만한 특성")
+print("  |r| > 0.7 강함, |r| > 0.4 중간 → 쓸만한 특성")
 print("  상관 ≠ 인과 (항상 주의)")
+print("  상관 0 ≠ 무관계 (y=x²) → scatter 확인")
 print("  scatter + 추세선 = 다음에 배울 선형회귀")
 print("="*50)

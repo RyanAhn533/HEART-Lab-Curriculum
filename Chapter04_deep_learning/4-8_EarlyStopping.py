@@ -1,13 +1,13 @@
 # ============================================
-# 2-8. validation + EarlyStopping + 학습곡선
-# 이전(2-5)과 차이: #3에 validation_split + EarlyStopping 콜백 추가
+# 4-8. validation + EarlyStopping + 학습곡선
+# 이전(4-5)과 차이: #3에 validation_split + EarlyStopping 콜백 추가
 #
 # 왜 배우는가:
-#   Phase 1-13 과적합을 코드로 감지하고 방지.
+#   2-8 과적합을 코드로 감지하고 방지.
 #   실무에서 model.fit()에 거의 항상 들어가는 것.
 #
 # 나중에 만나는 곳:
-#   → 모든 이후 Phase의 #3: 콜백 필수
+#   → 모든 후속 챕터의 #3: 콜백 필수
 #
 # ▶ 보고 오기: Coursera C2W3 "Advice for ML"
 #
@@ -82,9 +82,10 @@ print(f"R²: {r2:.4f}")                                # R² (1에 가까울수�
 fig, axes = plt.subplots(1, 3, figsize=(15, 4))      # 3개 그래프 캔버스
 
 # Train vs Val Loss — 과적합 감지의 핵심 그래프
+best_epoch = int(np.argmin(history.history['val_loss']))            # restore_best_weights가 복원하는 실제 최적 시점 = val_loss 최소 epoch
 axes[0].plot(history.history['loss'], 'b-', label='Train Loss')    # 학습 손실 (파랑)
 axes[0].plot(history.history['val_loss'], 'r-', label='Val Loss')  # 검증 손실 (빨강) — train보다 높으면 과적합
-axes[0].axvline(actual_epochs - 20, color='green', linestyle='--', alpha=0.5, label='Best Epoch')  # 최적 시점 표시
+axes[0].axvline(best_epoch, color='green', linestyle='--', alpha=0.5, label=f'Best Epoch={best_epoch}')  # 최적 시점 표시 (np.argmin으로 실측)
 axes[0].set_title('Learning Curve')                   # 제목: 학습 곡선
 axes[0].set_xlabel('Epoch')                           # x축: 에폭
 axes[0].set_ylabel('Loss (MSE)')                      # y축: 손실
@@ -109,7 +110,7 @@ axes[2].set_xlabel('Actual')                          # x축: 실제값
 axes[2].set_ylabel('Predicted')                       # y축: 예측값
 
 plt.tight_layout()                                    # 그래프 간 겹침 방지
-plt.savefig('2-8_output.png', dpi=100)                # PNG로 저장
+plt.savefig('4-8_output.png', dpi=100)                # PNG로 저장
 plt.show()                                            # 화면에 표시
 
 # ── 정리 ──────────────────────────────────
@@ -121,4 +122,4 @@ print("  restore_best_weights → 최적 가중치 복원")
 print("  학습곡선 → train↓ val↑ = 과적합!")
 print("  → 이후 모든 코드에 ES가 들어간다")
 print("="*50)
-print("\n★ Phase 2 완료! → 체크포인트 시험 2")
+print("\n★ Chapter 4 완료! → 체크포인트 시험 2")

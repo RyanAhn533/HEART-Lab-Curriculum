@@ -1,14 +1,14 @@
 # ============================================
-# 1-8. 손실함수 — MSE (Mean Squared Error)
+# 2-3. 손실함수 — MSE (Mean Squared Error)
 #
 # 왜 배우는가:
 #   "모델이 얼마나 틀렸는가"를 숫자 하나로 표현.
 #   이 숫자를 줄이는 것이 학습(training).
 #
 # 나중에 만나는 곳:
-#   → Phase 5: model.compile(loss='mse')
-#   → 1-9: 경사하강법이 이 값을 줄인다
-#   → 1-11: 분류용 손실함수 (BCE, CCE)
+#   → Chapter 4: model.compile(loss='mse')
+#   → 2-4: 경사하강법이 이 값을 줄인다
+#   → 2-6: 분류용 손실함수 (BCE, CCE)
 #
 # ▶ 보고 오기: Coursera C1W1 "Cost Function"
 #
@@ -121,7 +121,7 @@ axes[1, 2].set_title(f'MSE: Small={mse_small:.3f} vs Big={mse_big:.3f}')  # 제�
 axes[1, 2].set_ylabel('MSE')                          # y축: MSE 값
 
 plt.tight_layout()                                    # 그래프 간 간격 자동 조정
-plt.savefig('1-8_output.png', dpi=100)               # 이미지 파일로 저장
+plt.savefig('2-3_output.png', dpi=100)               # 이미지 파일로 저장
 plt.show()                                            # 화면에 표시
 
 # ── 정리 ──────────────────────────────────
@@ -131,5 +131,5 @@ print("  MSE = 오차²의 평균 (큰 오차에 페널티)")
 print("  RMSE = √MSE (원래 단위로 해석)")
 print("  MAE = |오차|의 평균 (이상치에 덜 민감)")
 print("  w를 바꾸면 MSE가 변한다 → 최소점 찾기 = 학습")
-print("  → 이 최소점을 찾는 방법 = 경사하강법 (1-9)")
+print("  → 이 최소점을 찾는 방법 = 경사하강법 (2-4)")
 print("="*50)

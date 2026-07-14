@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HEART Lab AI 커리큘럼 로드맵</title>
+<title>HEART Lab AI 커리큘럼 로드맵 — 8주 (5+3)</title>
 <style>
   :root{
     --ink:#1F3A5F; --teal:#2E6E8E; --gold:#B77A17; --goldbg:#FBF2DE;
     --line:#D8E0E7; --bg:#F4F7FA; --card:#FFFFFF; --mut:#5C6B79; --soft:#EAF1F6;
+    --red:#A6423A; --redbg:#FBEAE8;
   }
   *{box-sizing:border-box;}
   body{
@@ -54,12 +55,19 @@
   .row .v b{color:var(--ink);}
   .video{color:var(--teal); font-weight:600;}
   .paper{color:var(--gold); font-weight:600;}
+  .gate{color:var(--red); font-weight:700;}
 
   /* boot camp highlight */
   .stage.boot::before{background:var(--gold); box-shadow:0 0 0 2px var(--gold); width:17px; height:17px; left:-29px;}
   .stage.boot .card{border:1px solid #E8C97F; border-left:5px solid var(--gold); background:var(--goldbg);}
   .stage.boot .ch{color:var(--gold);}
-  .stage.boot .badge{display:inline-block; background:var(--gold); color:#fff; font-size:10.5px; font-weight:700; padding:2px 9px; border-radius:20px; margin-left:8px; vertical-align:middle;}
+  .badge{display:inline-block; background:var(--gold); color:#fff; font-size:10.5px; font-weight:700; padding:2px 9px; border-radius:20px; margin-left:8px; vertical-align:middle;}
+  .badge.exam{background:var(--red);}
+
+  /* project highlight */
+  .stage.proj::before{background:var(--red); box-shadow:0 0 0 2px var(--red);}
+  .stage.proj .card{border-left:5px solid var(--red); background:var(--redbg);}
+  .stage.proj .ch{color:var(--red);}
 
   .papers{margin-top:44px;}
   .papers h2{font-size:19px; color:var(--ink); border-bottom:2px solid var(--line); padding-bottom:8px;}
@@ -76,164 +84,114 @@
 <div class="wrap">
   <header class="top">
     <h1>HEART Lab AI 커리큘럼 로드맵</h1>
-    <div class="sub">통계 → 회귀 → ANN → CNN → RNN/LSTM → Transformer</div>
-    <div class="tiny">“일단 돌려보고 → 왜 그런지 파고든다.” 영상(직관) → 블로그 리뷰(정리) → 논문(원본)</div>
+    <div class="sub">8주 풀타임 (9-to-6) = 5주 커리큘럼 + 3주 미니 연구 프로젝트</div>
+    <div class="tiny">매일: 오전 이론·손계산 / 오후 코딩·실험 — 관문·시험 스펙은 CHECKPOINTS.md</div>
   </header>
 
   <div class="insight">
-    <h2>이 지도의 핵심 — ‘Chapter 4의 벽’과 수학 부트캠프</h2>
-    <p>커리큘럼은 의도적으로 <strong>top-down</strong>이다. 수학부터 시작하지 않고, 코드를 돌려본 뒤 필요한 이론을 역추적한다. 훌륭한 설계지만 <strong>Chapter 4(딥러닝 입문)</strong>에서 대가를 치른다. 순전파·역전파·Chain Rule 같은 진짜 ‘계산 기계’를 “3Blue1Brown 영상 보고 오기”로 넘기기 때문에, 스스로 손계산 근육을 만들지 않은 학생은 바로 여기서 미끄러진다.</p>
-    <p>그래서 Chapter 3와 4 사이에 <strong style="color:var(--gold)">수학 근육 부트캠프</strong>를 끼웠다. 커리큘럼을 바꾸는 게 아니라, 비어 있던 ‘손계산 레이어’ 하나만 채워 4-1(순전파/역전파)과 4-2(활성화)를 받쳐 주는 다리다.</p>
+    <h2>핵심 관점</h2>
+    <p><strong>커리큘럼은 수강생을 만들고, 마지막 3주가 연구원을 만든다.</strong>
+    처음 보는 데이터로 혼자 삽질한 3주(W6~8)가 투입 판정의 진짜 근거다.</p>
+    <p>매주 관문(GATE)이 있어 밀리는 지점이 조기에 드러난다. 막히는 건 결함이 아니라 이 시스템이 의도한 데이터다.</p>
+    <p class="tiny" style="color:var(--mut)">진입 조건: 진단 Section C(코딩) 불통과 시 Week 0 파이썬 부트캠프 1주 선행.</p>
   </div>
 
   <div class="legend">
-    <span><span class="dot" style="background:var(--teal)"></span> 커리큘럼 단계</span>
-    <span><span class="dot" style="background:var(--gold)"></span> 추가된 수학 부트캠프</span>
-    <span><span class="video">■</span> 필수 영상(3B1B)</span>
-    <span><span class="paper">■</span> 읽을 논문</span>
+    <span><span class="dot" style="background:var(--teal)"></span> 커리큘럼</span>
+    <span><span class="dot" style="background:var(--gold)"></span> 손계산 부트캠프</span>
+    <span><span class="dot" style="background:var(--red)"></span> 시험 / 프로젝트</span>
   </div>
 
   <div class="timeline">
 
     <div class="stage">
       <div class="card">
-        <div class="ch">Chapter 1 · numpy / pandas</div>
-        <h3>통계와 데이터 <span class="tag">Week 1</span></h3>
-        <div class="row"><div class="k">만드는 것</div><div class="v">기술통계·확률분포·EDA·결측치/이상치·인코딩/스케일링</div></div>
-        <div class="row"><div class="k">핵심 개념</div><div class="v">평균·분산·정규분포, 조건부확률 — <b>표본으로 모집단을 추정한다</b></div></div>
-        <div class="row"><div class="k">영상</div><div class="v"><span class="video">3B1B “But what is a neural network?”</span> (전체 동기)</div></div>
+        <div class="ch">Week 1</div>
+        <h3>통계·데이터 → 회귀의 문 앞까지 <span class="tag">Ch.1 + B-4 + Ch.2 전반</span></h3>
+        <div class="row"><div class="k">월</div><div class="v">오전 오리엔테이션 + <b>진단 테스트</b>(출발점 기록) → 오후 Ch.1 시작</div></div>
+        <div class="row"><div class="k">~수</div><div class="v">1-1~1-6 + <b>B-4 확률통계 손계산</b> <span class="gate">GATE 1</span></div></div>
+        <div class="row"><div class="k">목~금</div><div class="v">2-1~2-4 (상관·선형회귀·MSE·경사하강) + 미분 손계산 씨앗 <span class="gate">GATE 2</span></div></div>
+        <div class="row"><div class="k">영상</div><div class="v"><span class="video">3B1B "Neural network?", "Gradient descent"</span></div></div>
       </div>
     </div>
 
     <div class="stage">
       <div class="card">
-        <div class="ch">Chapter 2 · sklearn</div>
-        <h3>예측과 분류의 기초 <span class="tag">Week 2–3</span></h3>
-        <div class="row"><div class="k">만드는 것</div><div class="v">상관분석 · 선형회귀 · 손실함수(MSE) · 경사하강법 · 로지스틱회귀 · BCE/CCE · 평가지표 · 과적합</div></div>
-        <div class="row"><div class="k">핵심 개념</div><div class="v"><b>직선 하나로 근사한다.</b> 오차를 재고(MSE), 기울기 반대로 내려간다(경사하강)</div></div>
-        <div class="row"><div class="k">영상</div><div class="v"><span class="video">3B1B “Gradient descent”</span></div></div>
-      </div>
-    </div>
-
-    <div class="stage">
-      <div class="card">
-        <div class="ch">Chapter 3 · sklearn</div>
-        <h3>머신러닝 모델들 <span class="tag">Week 4–5</span></h3>
-        <div class="row"><div class="k">만드는 것</div><div class="v">결정트리 · 랜덤포레스트 · SVM · KNN · K-Means · PCA · <b>ML의 한계 → 딥러닝 필요성</b></div></div>
-        <div class="row"><div class="k">핵심 개념</div><div class="v">여러 모델을 도구로 비교. “언제 무엇을” 고르는 감각</div></div>
+        <div class="ch">Week 2</div>
+        <h3>분류 → 머신러닝 한 바퀴 <span class="tag">Ch.2 후반 + Ch.3</span><span class="badge exam">★ 시험 1 (금)</span></h3>
+        <div class="row"><div class="k">월~화</div><div class="v">2-5~2-8 + <b>GD로 BCE 최소화</b> 통합 실습 (Ch.2의 고리 닫기)</div></div>
+        <div class="row"><div class="k">수~금</div><div class="v">3-1~3-8 (트리·RF·SVM·KNN·KMeans·PCA·ML 한계) — 하이퍼파라미터는 <b>validation으로 선택</b></div></div>
+        <div class="row"><div class="k">시험 1</div><div class="v">손계산 45분 + 코딩 60분. <b>수학 파트 80%↑ → 부트캠프 B-1~B-4 스킵 가능</b></div></div>
       </div>
     </div>
 
     <div class="stage boot">
       <div class="card">
-        <div class="ch">추가 · 손계산 중심</div>
-        <h3>수학 근육 부트캠프 <span class="badge">여기서 벽을 넘는다</span></h3>
-        <div class="row"><div class="k">만드는 것</div><div class="v">미분·최소화 → <b>연쇄법칙(역전파의 심장)</b> → 선형대수 → 확률통계 → 캡스톤(2층망 손역전파 + XOR)</div></div>
-        <div class="row"><div class="k">핵심 개념</div><div class="v">4-1·4-2가 “영상 보고 와”로 넘긴 계산을 <b>손으로 직접</b> 굴려 몸에 새긴다. 계산그래프로 순전파/역전파를 그려 본다</div></div>
-        <div class="row"><div class="k">받쳐줌</div><div class="v">Chapter 4의 4-1(순전파/역전파), 4-2(활성화=비선형) · 기존 <b>DIAGNOSTIC_TEST Section A</b>와 연결</div></div>
-        <div class="row"><div class="k">영상</div><div class="v"><span class="video">3B1B “Backpropagation” Ch.3–4</span>, “Essence of Calculus”</div></div>
+        <div class="ch">Week 3</div>
+        <h3>수학 근육 부트캠프 → 딥러닝 입문 <span class="tag">Ch.3.5 + Ch.4</span><span class="badge">Ch.4의 벽</span></h3>
+        <div class="row"><div class="k">월~화</div><div class="v">B-1 미분 → B-2 연쇄법칙·계산그래프 → B-3 선형대수 → <b>B-5 캡스톤: 손 역전파 XOR (전원 필수)</b> <span class="gate">GATE 3.5 = 화이트보드 구술</span></div></div>
+        <div class="row"><div class="k">수~금</div><div class="v">4-1~4-8 (뉴런·활성화·TF2 회귀/이진/다중·ES) + <b>4-7 혼자 짜보기 5종</b> <span class="gate">GATE 4</span></div></div>
+        <div class="row"><div class="k">영상</div><div class="v"><span class="video">3B1B "Backpropagation" Ch.3~4, "Essence of Calculus" 1~3</span></div></div>
       </div>
     </div>
 
     <div class="stage">
       <div class="card">
-        <div class="ch">Chapter 4 · TF2 / Keras</div>
-        <h3>딥러닝 입문 (ANN) <span class="tag">Week 6</span></h3>
-        <div class="row"><div class="k">만드는 것</div><div class="v">뉴런=선형회귀+활성화 · 순전파/역전파 · TF2 회귀/이진분류/다중분류 · EarlyStopping</div></div>
-        <div class="row"><div class="k">핵심 개념</div><div class="v"><b>회귀를 벽돌로, 비선형을 접착제로.</b> 활성화가 없으면 100층도 선형회귀 하나로 붕괴</div></div>
-        <div class="row"><div class="k">영상</div><div class="v"><span class="video">3B1B “Neural Networks” Ch.1</span></div></div>
-        <div class="row"><div class="k">논문</div><div class="v"><span class="paper">퍼셉트론 논문 리뷰</span> (블로그부터)</div></div>
+        <div class="ch">Week 4</div>
+        <h3>CNN → RNN/LSTM <span class="tag">worksheets + AI5 레포</span></h3>
+        <div class="row"><div class="k">월~수</div><div class="v"><b>handcalc_CNN</b> (출력크기·파라미터 수 손계산) → CNN 실습 (AI5 keras35~50)</div></div>
+        <div class="row"><div class="k">목~금</div><div class="v"><b>handcalc_RNN_LSTM</b> (언롤·기울기 소실 0.5⁹·게이트) → RNN/LSTM 실습 (AI5 keras51~63)</div></div>
+        <div class="row"><div class="k">영상</div><div class="v"><span class="video">3B1B "Convolution?", StatQuest "RNN", colah "Understanding LSTM"</span></div></div>
       </div>
     </div>
 
     <div class="stage">
       <div class="card">
-        <div class="ch">Chapter 5 (Phase 5) · TF2 / Keras</div>
-        <h3>이미지 — CNN</h3>
-        <div class="row"><div class="k">만드는 것</div><div class="v">Conv2D + MaxPool · DNN vs CNN 비교 · 데이터 증강</div></div>
-        <div class="row"><div class="k">핵심 개념</div><div class="v">이미지엔 왜 MLP 대신 CNN인가 — <b>지역 패턴을 훑는 필터</b>. 출력 크기 계산</div></div>
-        <div class="row"><div class="k">영상</div><div class="v"><span class="video">3B1B “But what is a convolution?”</span></div></div>
-        <div class="row"><div class="k">논문</div><div class="v"><span class="paper">LeNet-5 (1998)</span> · <span class="paper">AlexNet (2012)</span></div></div>
+        <div class="ch">Week 5</div>
+        <h3>논문 읽기 → 검증 <span class="tag">PAPER_GUIDE</span><span class="badge exam">★ 시험 2 (수)</span></h3>
+        <div class="row"><div class="k">월~화</div><div class="v"><span class="paper">LeNet · AlexNet · LSTM · Word2Vec</span> — 영상→리뷰 블로그→원문 순서로</div></div>
+        <div class="row"><div class="k">수</div><div class="v">시험 2: 손계산 45분 (MLP Chain Rule·CNN 크기·RNN·LSTM) + 코딩 80분 (MLP/CNN/LSTM 2/3 합격)</div></div>
+        <div class="row"><div class="k">목~금</div><div class="v">미통과 영역 보충 버퍼 (전원 통과 시 프로젝트 조기 착수)</div></div>
       </div>
     </div>
 
-    <div class="stage">
+    <div class="stage proj">
       <div class="card">
-        <div class="ch">Chapter 6 (Phase 6) · TF2 / Keras</div>
-        <h3>시계열 — RNN / LSTM</h3>
-        <div class="row"><div class="k">만드는 것</div><div class="v">SimpleRNN · LSTM · Bidirectional + Conv1D</div></div>
-        <div class="row"><div class="k">핵심 개념</div><div class="v"><b>기울기 소실(Vanishing Gradient)</b>과 LSTM의 게이트(forget/input/output)가 그걸 어떻게 푸는가</div></div>
-        <div class="row"><div class="k">영상</div><div class="v"><span class="video">3B1B “Recurrent Neural Networks”</span></div></div>
-        <div class="row"><div class="k">논문</div><div class="v"><span class="paper">LSTM (Hochreiter &amp; Schmidhuber, 1997)</span></div></div>
+        <div class="ch">Week 6~7</div>
+        <h3>미니 연구 프로젝트 <span class="tag">여기서 연구원이 된다</span></h3>
+        <div class="row"><div class="k">요건</div><div class="v">처음 보는 데이터 → 문제 정의 → EDA → 모델 2개+ 비교 → <b>val로만 선택, test 1회</b></div></div>
+        <div class="row"><div class="k">필수</div><div class="v"><b>seed 3개 이상, 평균 ± 표준편차 보고</b> + 실패 분석 1개 이상</div></div>
+        <div class="row"><div class="k">W7 초</div><div class="v">중간 점검 (방향 교정)</div></div>
       </div>
     </div>
 
-    <div class="stage">
+    <div class="stage proj">
       <div class="card">
-        <div class="ch">Chapter 7 (Phase 7) · TF2 / Keras</div>
-        <h3>자연어 — NLP</h3>
-        <div class="row"><div class="k">만드는 것</div><div class="v">Tokenizer + Embedding · 감정분류 프로젝트</div></div>
-        <div class="row"><div class="k">핵심 개념</div><div class="v">단어를 <b>벡터로</b> 바꾸기. 의미가 거리·방향이 되는 임베딩</div></div>
-        <div class="row"><div class="k">영상</div><div class="v"><span class="video">3B1B “Word2Vec”</span></div></div>
-        <div class="row"><div class="k">논문</div><div class="v"><span class="paper">Word2Vec (Mikolov, 2013)</span></div></div>
+        <div class="ch">Week 8</div>
+        <h3>마무리 → 최종 발표 <span class="tag">투입 판정</span><span class="badge exam">★ 발표 (금)</span></h3>
+        <div class="row"><div class="k">월~수</div><div class="v">프로젝트 마무리 + <b>Transformer 지도 그리기</b> (<span class="video">3B1B "Attention"</span> + <span class="paper">Attention Is All You Need</span> 리뷰 루트 — 이해 말고 위치만)</div></div>
+        <div class="row"><div class="k">금</div><div class="v">발표 (문제정의 20 / 구현 30 / 분석 20 / 원리 20 / 발표 10) → A 즉시 투입 / B 페어 투입 / C 보충</div></div>
       </div>
     </div>
 
-    <div class="stage">
-      <div class="card">
-        <div class="ch">Chapter 8 (Phase 8) · TF2 + sklearn</div>
-        <h3>성능 올리기 — 전이학습</h3>
-        <div class="row"><div class="k">만드는 것</div><div class="v">옵티마이저 + ReduceLROnPlateau · 하이퍼파라미터 튜닝 · 전이학습(VGG16, ResNet, GAP)</div></div>
-        <div class="row"><div class="k">핵심 개념</div><div class="v">남이 학습한 특징을 빌려 쓴다. <b>Skip Connection</b>이 왜 깊은 망을 살리는가</div></div>
-        <div class="row"><div class="k">논문</div><div class="v"><span class="paper">VGGNet (2014)</span> · <span class="paper">ResNet (2015)</span></div></div>
-      </div>
-    </div>
-
-    <div class="stage">
-      <div class="card">
-        <div class="ch">Chapter 9 (Phase 9) · sklearn</div>
-        <h3>ML 기본기 심화</h3>
-        <div class="row"><div class="k">만드는 것</div><div class="v">PCA + KFold · GridSearch + Feature Importance · 앙상블(Bagging/Voting/Stacking) · SMOTE, Poly</div></div>
-        <div class="row"><div class="k">영상</div><div class="v"><span class="video">3B1B “Essence of Linear Algebra” 전편</span></div></div>
-        <div class="row"><div class="k">논문</div><div class="v"><span class="paper">XGBoost 논문 리뷰</span></div></div>
-      </div>
-    </div>
-
-    <div class="stage">
-      <div class="card">
-        <div class="ch">Chapter 10 (Phase 10) · PyTorch</div>
-        <h3>PyTorch + 논문 재현</h3>
-        <div class="row"><div class="k">만드는 것</div><div class="v">Keras에서 한 것을 Torch로 재구현 · DataLoader/nn.Module · CNN+RNN in Torch · <b>Transformer 재현</b></div></div>
-        <div class="row"><div class="k">핵심 개념</div><div class="v">내부 동작을 손으로 짠다(수동 train loop). Attention의 Q·K·V</div></div>
-        <div class="row"><div class="k">영상</div><div class="v"><span class="video">3B1B “Attention in transformers”</span></div></div>
-        <div class="row"><div class="k">논문</div><div class="v"><span class="paper">Attention Is All You Need (Vaswani, 2017)</span></div></div>
-      </div>
-    </div>
-
-  </div><!-- /timeline -->
+  </div>
 
   <div class="papers">
-    <h2>논문, 언제 · 왜 읽나</h2>
-    <p style="font-size:13px; color:var(--mut); margin:6px 0 0;">원칙: <b>영상(직관) → 블로그 “○○ 논문 리뷰”(정리) → 원문(디테일)</b>. 절대 논문부터 읽지 않는다.</p>
+    <h2>논문 7편 — 언제 읽나</h2>
     <table>
-      <tr><th style="width:120px;">읽는 시점</th><th style="width:230px;">논문</th><th>왜 읽는가</th></tr>
-      <tr><td><span class="when">Phase 5 후</span></td><td>LeNet-5 (LeCun, 1998)</td><td>CNN의 시작 — 합성곱+풀링의 원형</td></tr>
-      <tr><td><span class="when">Phase 5 후</span></td><td>AlexNet (Krizhevsky, 2012)</td><td>딥러닝 부활의 신호탄 (ReLU, Dropout, GPU)</td></tr>
-      <tr><td><span class="when">Phase 6 후</span></td><td>LSTM (Hochreiter &amp; Schmidhuber, 1997)</td><td>시계열의 핵심 — 기울기 소실을 게이트로 해결</td></tr>
-      <tr><td><span class="when">Phase 7 후</span></td><td>Word2Vec (Mikolov, 2013)</td><td>임베딩의 시작 — 의미를 벡터로</td></tr>
-      <tr><td><span class="when">Phase 8</span></td><td>VGGNet (Simonyan, 2014)</td><td>전이학습의 기본 백본</td></tr>
-      <tr><td><span class="when">Phase 8</span></td><td>ResNet (He, 2015)</td><td>Skip Connection — 아주 깊은 망을 가능하게</td></tr>
-      <tr><td><span class="when">Phase 10</span></td><td>Attention Is All You Need (Vaswani, 2017)</td><td>현대 AI(LLM)의 기반 — Transformer</td></tr>
+      <tr><th>논문</th><th>시점</th><th>한 줄</th></tr>
+      <tr><td>LeNet-5 (1998)</td><td><span class="when">W5</span></td><td>Conv+Pooling+FC라는 CNN의 원형</td></tr>
+      <tr><td>AlexNet (2012)</td><td><span class="when">W5</span></td><td>ReLU+Dropout+GPU로 딥러닝 부활</td></tr>
+      <tr><td>LSTM (1997)</td><td><span class="when">W5</span></td><td>게이트로 기울기 소실 해결 (원문 어려움 — colah 글로 대체 가능)</td></tr>
+      <tr><td>Word2Vec (2013)</td><td><span class="when">W5</span></td><td>의미를 벡터로</td></tr>
+      <tr><td>VGGNet (2014)</td><td><span class="when">3개월차</span></td><td>깊이의 힘, 전이학습 기본</td></tr>
+      <tr><td>ResNet (2015)</td><td><span class="when">3개월차</span></td><td>Skip Connection</td></tr>
+      <tr><td>Attention Is All You Need (2017)</td><td><span class="when">W8 지도만 → 3개월차</span></td><td>현대 AI의 기반</td></tr>
     </table>
   </div>
 
-  <div class="insight" style="border-left-color:var(--teal); margin-top:34px;">
-    <h2>학생에게 한마디</h2>
-    <p>한 달 만에 이 체인 전체가 안 꿰지는 건 정상이다. 보통 한 학기짜리 흐름이다. 지금 필요한 건 속도가 아니라 <strong>순서</strong>다. 부트캠프의 손계산부터 통과하면, Chapter 4의 <code>model.fit()</code>이 더 이상 마법이 아니라 네가 손으로 해 본 계산의 자동화로 보이기 시작한다.</p>
-  </div>
-
   <div class="foot">
-    HEART Lab AI Curriculum · 세종대학교 · 로드맵 v1 · 기반: CURRICULUM_MASTER.md / DIAGNOSTIC_TEST.md
+    HEART Lab AI Curriculum — 관문·시험 스펙: CHECKPOINTS.md · 운영: MANUAL.md · 읽는 법: PAPER_GUIDE.md
   </div>
 </div>
 </body>

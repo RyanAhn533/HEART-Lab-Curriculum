@@ -1,13 +1,13 @@
 # ============================================
-# 1-13. 과적합과 일반화 (Overfitting & Generalization)
+# 2-8. 과적합과 일반화 (Overfitting & Generalization)
 #
 # 왜 배우는가:
 #   훈련 데이터에서 잘 되는데 새 데이터에서 안 되는 이유.
 #   ML에서 가장 흔하고 중요한 문제.
 #
 # 나중에 만나는 곳:
-#   → Phase 6: EarlyStopping, Dropout
-#   → Phase 11: KFold, cross_val_score
+#   → Chapter 4: EarlyStopping(4-8), Dropout
+#   → 후속 챕터: KFold, cross_val_score
 #
 # ▶ 보고 오기: Coursera C1W3 "Overfitting"
 #
@@ -18,7 +18,7 @@ import numpy as np                                    # numpy: 수학 계산 라
 import matplotlib.pyplot as plt                        # matplotlib: 그래프를 그리는 라이브러리
 from sklearn.preprocessing import PolynomialFeatures   # PolynomialFeatures: 다항식 특성 생성 (x → x, x², x³ ...)
 from sklearn.linear_model import LinearRegression, Ridge  # LinearRegression: 선형회귀, Ridge: L2 정규화가 추가된 선형회귀
-from sklearn.model_selection import train_test_split, cross_val_score  # train_test_split: 데이터 분할, cross_val_score: 교차검증
+from sklearn.model_selection import train_test_split, cross_val_score, KFold  # train_test_split: 데이터 분할, cross_val_score: 교차검증, KFold: 폴드 분할 방식 제어
 from sklearn.metrics import mean_squared_error         # mean_squared_error: 평균 제곱 오차 (MSE)
 from sklearn.pipeline import Pipeline                  # Pipeline: 여러 처리 단계를 하나로 묶는 도구 (전처리→학습을 한번에)
 
@@ -65,28 +65,38 @@ pipe_overfit = Pipeline([                              # 정규화 없는 15차 
     ('poly', PolynomialFeatures(degree=15)),           # 15차 다항식 특성 생성
     ('lr', LinearRegression())                         # 일반 선형회귀 (제약 없음)
 ])
-pipe_ridge = Pipeline([                                # Ridge 정규화가 있는 15차 모델 (과적합 방지)
-    ('poly', PolynomialFeatures(degree=15)),           # 15차 다항식 특성 생성
-    ('ridge', Ridge(alpha=0.1))                        # Ridge: 가중치가 너무 커지지 않도록 제약 (alpha: 제약 강도)
-])
-
 pipe_overfit.fit(X_train, y_train)                     # 정규화 없는 모델 학습
-pipe_ridge.fit(X_train, y_train)                       # Ridge 모델 학습
-
 test_overfit = mean_squared_error(y_test, pipe_overfit.predict(X_test))  # 정규화 없는 모델의 테스트 MSE
-test_ridge = mean_squared_error(y_test, pipe_ridge.predict(X_test))     # Ridge 모델의 테스트 MSE
-print(f"  Degree=15 (정규화 없음): Test MSE = {test_overfit:.4f}")
-print(f"  Degree=15 + Ridge:      Test MSE = {test_ridge:.4f}")
-print(f"  → 정규화로 과적합 완화")
+print(f"  Degree=15 (정규화 없음):       Test MSE = {test_overfit:.4f}")
+
+# alpha(제약 강도)도 하이퍼파라미터 — 값을 바꿔가며 스윕해서 감을 잡는다
+alphas = [0.001, 0.1, 10]                              # 약한 제약 ~ 강한 제약
+ridge_pipes = {}                                       # alpha별 학습된 모델 저장
+for a in alphas:                                       # 각 alpha에 대해
+    pipe_r = Pipeline([                                # Ridge 정규화가 있는 15차 모델
+        ('poly', PolynomialFeatures(degree=15)),       # 15차 다항식 특성 생성
+        ('ridge', Ridge(alpha=a))                      # Ridge: 가중치가 너무 커지지 않도록 제약 (alpha: 제약 강도)
+    ])
+    pipe_r.fit(X_train, y_train)                       # Ridge 모델 학습
+    ridge_pipes[a] = pipe_r                            # 저장 (시각화에 재사용)
+    test_r = mean_squared_error(y_test, pipe_r.predict(X_test))  # 해당 alpha의 테스트 MSE
+    print(f"  Degree=15 + Ridge(alpha={a}): Test MSE = {test_r:.4f}")
+print(f"  → alpha에 따라 결과가 달라진다 (여기선 작은 alpha로도 충분, 너무 크면 과소적합 방향)")
+print(f"  → alpha도 하이퍼파라미터: 문제마다 최적값이 다르므로 튜닝 대상")
+
+pipe_ridge = ridge_pipes[0.1]                          # 시각화용: 중간 강도 alpha=0.1 모델
+test_ridge = mean_squared_error(y_test, pipe_ridge.predict(X_test))  # alpha=0.1의 테스트 MSE
 
 # ── 4. 교차검증 ──────────────────────────
-print(f"\n[ 교차검증 (5-Fold) ]")
+print(f"\n[ 교차검증 (5-Fold, shuffle) ]")
+cv = KFold(n_splits=5, shuffle=True, random_state=42)  # shuffle=True: X가 정렬되어 있어서 순서대로 자르면
+# ↑ 각 fold가 한 구간(예: 0~0.2)에 몰림 → 학습 범위 밖 외삽으로 고차 다항식 MSE가 폭발. 셔플로 완화
 for d in degrees:                                      # 각 차수에 대해
     pipe = Pipeline([                                  # 파이프라인 생성
         ('poly', PolynomialFeatures(degree=d)),        # 다항식 특성 변환
         ('lr', LinearRegression())                     # 선형회귀
     ])
-    scores = cross_val_score(pipe, X, y, cv=5, scoring='neg_mean_squared_error')  # 5-Fold 교차검증: 데이터를 5등분해서 5번 학습/평가
+    scores = cross_val_score(pipe, X, y, cv=cv, scoring='neg_mean_squared_error')  # 5-Fold 교차검증: 데이터를 5등분해서 5번 학습/평가
     mean_mse = -scores.mean()                          # 결과가 음수로 나오므로 -를 붙여 양수로 변환
     std_mse = scores.std()                             # 5번 결과의 표준편차 (안정성 지표)
     print(f"  Degree={d:2d}: MSE = {mean_mse:.4f} (±{std_mse:.4f})")
@@ -151,7 +161,7 @@ axes[1, 2].set_title('Bias-Variance Tradeoff')         # 제목: 편향-분산 �
 axes[1, 2].legend()                                    # 범례
 
 plt.tight_layout()                                     # 그래프 간 간격 자동 조정
-plt.savefig('1-13_output.png', dpi=100)               # 이미지 파일로 저장
+plt.savefig('2-8_output.png', dpi=100)               # 이미지 파일로 저장
 plt.show()                                             # 화면에 표시
 
 # ── 정리 ──────────────────────────────────
@@ -161,6 +171,7 @@ print("  과소적합 = 모델 너무 단순 → 레이어/특성 추가")
 print("  과적합   = 모델 너무 복잡 → 정규화/데이터 추가")
 print("  train/test 분할 = 반드시 나눠서 평가")
 print("  교차검증 = K번 반복해서 안정적 평가")
-print("  정규화 = 가중치를 크게 만들지 않는 제약")
+print("  정규화 = 가중치를 크게 만들지 않는 제약 (alpha도 하이퍼파라미터)")
+print("  시드 고정 = 재현성. 연구에선 multi-seed 평균±표준편차 보고가 표준")
 print("="*50)
-print("\n★ Phase 1 완료! → 체크포인트 시험 1")
+print("\n★ Chapter 2 완료! — 다음은 Chapter 3 (머신러닝) → 체크포인트 시험 1")

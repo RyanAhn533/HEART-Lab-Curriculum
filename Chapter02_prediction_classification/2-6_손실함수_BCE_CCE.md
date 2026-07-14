@@ -1,4 +1,4 @@
-# 1-11. 분류의 오차 측정 — BCE / CCE
+# 2-6. 분류의 오차 측정 — BCE / CCE
 
 > **Ref: Coursera C1W3 비용함수 / Google MLCC "Logistic Regression"**
 
@@ -6,17 +6,18 @@
 
 ## 왜 배우는가
 
-1-8에서 회귀용 손실함수(MSE)를 배웠다. 분류 문제에서는 MSE가 잘 안 된다.
+2-3에서 회귀용 손실함수(MSE)를 배웠다. 분류 문제에서는 MSE가 잘 안 된다.
 분류에 맞는 손실함수가 **Binary Cross-Entropy(BCE)**와 **Categorical Cross-Entropy(CCE)**.
 
 ---
 
 ## 1. 왜 분류에 MSE를 안 쓰는가?
 
-Sigmoid 출력에 MSE를 적용하면 **손실 곡면이 울퉁불퉁**해서
-경사하강법이 최저점을 못 찾는다 (local minimum에 빠짐).
+Sigmoid 출력에 MSE를 결합하면 손실 함수가 **비볼록(non-convex)**해지고,
+sigmoid가 0이나 1에 가까운 **포화 구간에서는 기울기가 거의 0**이라
+경사하강법의 학습이 매우 느려진다. **핵심 문제는 기울기 소실**이다.
 
-BCE를 쓰면 손실 곡면이 **매끄러운 볼록 함수**가 되어 최적화가 잘 된다.
+BCE를 쓰면 손실이 **볼록(convex)**해지고, 확신하며 틀릴수록 기울기가 커져서 학습이 잘 된다.
 
 ---
 
@@ -67,13 +68,26 @@ p_i: Softmax 출력 (각 클래스 확률)
 
 ---
 
+## 5. 고리 닫기 — 2-4 + 2-6 = 2-5
+
+경사하강법(2-4)으로 BCE(2-6)를 최소화하면, 그게 바로 **로지스틱 회귀(2-5)**다.
+
+```
+z = wx + b  →  p = sigmoid(z)  →  BCE(y, p)  →  GD로 w, b 업데이트 → 반복
+```
+
+sklearn의 `LogisticRegression()`이 내부에서 하는 일이 정확히 이것.
+실습 py 말미에 numpy 20줄로 직접 구현해서 sklearn 결과와 비교한다.
+
+---
+
 ## 나중에 만나는 곳
 
 | 여기서 배운 것 | 나중에 만나는 곳 | 어떻게 쓰이는가 |
 |--------------|---------------|---------------|
-| BCE | Phase 5~6 이진분류 | `loss='binary_crossentropy'` |
-| CCE | Phase 5~6 다중분류 | `loss='categorical_crossentropy'` |
-| 문제→손실 매핑 | 모든 Phase의 #3 | 문제 유형 보고 loss 선택 |
+| BCE | Chapter 4 이진분류 | `loss='binary_crossentropy'` |
+| CCE | Chapter 4 다중분류 | `loss='categorical_crossentropy'` |
+| 문제→손실 매핑 | 모든 Chapter의 #3 | 문제 유형 보고 loss 선택 |
 
 ---
 
@@ -87,6 +101,6 @@ p_i: Softmax 출력 (각 클래스 확률)
 
 ## 실습
 
-`1-11_손실함수_BCE_CCE.py` 참조
+`2-6_손실함수_BCE_CCE.py` 참조
 
-*다음: 1-12. 모델이 잘 했는가 — 평가지표*
+*다음: 2-7. 모델이 잘 했는가 — 평가지표*

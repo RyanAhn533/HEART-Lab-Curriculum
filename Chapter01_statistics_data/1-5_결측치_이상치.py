@@ -1,13 +1,13 @@
 # ============================================
-# 1-4. 결측치 / 이상치 처리
+# 1-5. 결측치 / 이상치 처리
 #
 # 왜 배우는가:
 #   현실 데이터는 비어있거나 이상한 값이 있다.
 #   처리 안 하면 모델이 엉뚱한 패턴을 학습한다.
 #
 # 나중에 만나는 곳:
-#   → 모든 Phase의 #2: 전처리 단계
-#   → 1-5 스케일링: 이상치 처리 후 스케일링
+#   → 모든 Chapter의 #2: 전처리 단계
+#   → 1-6 스케일링: 이상치 처리 후 스케일링
 #
 # ▶ 보고 오기: 구글 "pandas 결측치 처리"
 #
@@ -43,14 +43,15 @@ print(df.head(10))                # 처음 10행 미리보기
 df_cleaned = df.copy()            # copy(): 원본을 건드리지 않고 복사본에서 작업 (원본 보존용)
 
 # 연속형: 중앙값으로 대체 (이상치에 강함)
-df_cleaned['age'].fillna(df_cleaned['age'].median(), inplace=True)
-# ↑ fillna: NaN을 지정한 값으로 채움. median()=중앙값. inplace=True→원본 데이터 직접 수정
+df_cleaned['age'] = df_cleaned['age'].fillna(df_cleaned['age'].median())
+# ↑ fillna: NaN을 지정한 값으로 채움. median()=중앙값. 결과를 다시 열에 대입하는 패턴
+# ↑ (Series에 inplace=True를 쓰는 체인 방식은 pandas 최신 버전에서 동작을 보장하지 않음)
 # ↑ 왜 중앙값? 평균은 이상치에 끌려가지만 중앙값은 안정적
-df_cleaned['salary'].fillna(df_cleaned['salary'].median(), inplace=True)
+df_cleaned['salary'] = df_cleaned['salary'].fillna(df_cleaned['salary'].median())
 # ↑ salary의 NaN도 중앙값으로 대체
 
 # 범주형: 최빈값으로 대체
-df_cleaned['department'].fillna(df_cleaned['department'].mode()[0], inplace=True)
+df_cleaned['department'] = df_cleaned['department'].fillna(df_cleaned['department'].mode()[0])
 # ↑ mode(): 가장 자주 나오는 값(최빈값). [0]은 첫 번째 최빈값 선택
 
 print(f"\n[ 결측치 처리 후 ]")
@@ -135,7 +136,7 @@ axes[1, 2].boxplot([df_cleaned['salary'], df_clipped['salary']],
 axes[1, 2].set_title('Before vs After Clipping')     # 제목: 클리핑 전 vs 후
 
 plt.tight_layout()               # 차트 간 간격 자동 조정
-plt.savefig('1-4_output.png', dpi=100)  # 이미지 파일로 저장. dpi=해상도
+plt.savefig('1-5_output.png', dpi=100)  # 이미지 파일로 저장. dpi=해상도
 plt.show()                       # 화면에 그래프 표시
 
 # ── 정리 ──────────────────────────────────

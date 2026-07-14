@@ -1,4 +1,4 @@
-# 2-8. 학습을 언제 멈출까 — validation + EarlyStopping + 학습곡선
+# 4-8. 학습을 언제 멈출까 — validation + EarlyStopping + 학습곡선
 
 > **Ref: Coursera C2W3 / AI5 keras15~19**
 
@@ -6,7 +6,7 @@
 
 ## 왜 배우는가
 
-Phase 1-13에서 **과적합**을 이론으로 배웠다.
+2-8에서 **과적합**을 이론으로 배웠다.
 이제 실제 코드에서 **과적합을 감지하고 방지**하는 방법을 배운다.
 
 ---
@@ -57,9 +57,9 @@ train_loss ↓ val_loss → → 수렴 (최적점)
 
 | 여기서 배운 것 | 나중에 만나는 곳 |
 |--------------|---------------|
-| validation_split | 모든 Phase의 #3 |
-| EarlyStopping | 모든 Phase의 #3 |
-| 학습곡선 | Phase 10 ReduceLROnPlateau |
+| validation_split | 모든 후속 챕터의 #3 |
+| EarlyStopping | 모든 후속 챕터의 #3 |
+| 학습곡선 | ReduceLROnPlateau (후속 챕터) |
 
 ---
 
@@ -72,6 +72,6 @@ train_loss ↓ val_loss → → 수렴 (최적점)
 
 ## 실습
 
-`2-8_EarlyStopping.py` 참조
+`4-8_EarlyStopping.py` 참조
 
-**★ Phase 2 완료 → 체크포인트 시험 2**
+**★ Chapter 4 완료 → 체크포인트 시험 2**

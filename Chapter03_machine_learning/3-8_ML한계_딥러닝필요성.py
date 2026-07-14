@@ -98,9 +98,14 @@ model_dnn = Sequential([                         # Sequential: 층을 순서대�
 model_dnn.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])  # compile: 학습 설정 / loss: 손실함수(다중분류용) / optimizer='adam': 경사하강법 최적화기 / metrics: 평가지표
 model_dnn.fit(x_tr, to_categorical(y_tr, 10), epochs=10, batch_size=32, verbose=0)  # fit: 학습 / epochs=10: 전체 데이터 10번 반복 / batch_size=32: 32개씩 묶어서 학습 / verbose=0: 로그 숨김
 _, acc_dnn = model_dnn.evaluate(x_te, to_categorical(y_te, 10), verbose=0)  # evaluate: 테스트 데이터로 성능 평가 / _: 손실값 (사용 안 함)
+best_ml_name = max(results, key=results.get)     # 전통 ML 중 최고 모델 (아직 DNN은 results에 없음)
+best_ml_acc = results[best_ml_name]
 results['DNN (Chapter 4)'] = acc_dnn
-print(f"  DNN accuracy: {acc_dnn:.4f}")
-print(f"  → 같은 데이터, 같은 Flatten인데 DNN이 더 좋다")
+print(f"  DNN accuracy: {acc_dnn:.4f} (최고 전통 ML: {best_ml_name} {best_ml_acc:.4f})")
+if acc_dnn > best_ml_acc:                        # 실측 비교 — 결과는 실행마다 다를 수 있다
+    print(f"  → 같은 데이터, 같은 Flatten인데 DNN이 더 좋다")
+else:
+    print(f"  → 이 스케일(5000장)에선 전통 ML도 강하다 — 데이터가 커지고 구조가 복잡해질수록 DNN이 유리해진다")
 print(f"  → CNN(Chapter 5)으로 바꾸면 99%+ 가능")
 
 # ── 5. 시각화 ─────────────────────────────

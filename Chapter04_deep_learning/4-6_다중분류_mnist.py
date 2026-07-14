@@ -1,17 +1,17 @@
 # ============================================
-# 2-6. 다중분류 — MNIST (10 클래스, 이미지)
-# 이전(2-6 iris)과 차이: #1 데이터셋만 교체 + #2에 reshape
+# 4-6. 다중분류 — MNIST (10 클래스, 이미지)
+# 이전(4-6 iris)과 차이: #1 데이터셋만 교체 + #2에 reshape
 #
 # 왜 배우는가:
 #   같은 다중분류 구조가 이미지에서도 동작하는지 확인.
-#   Phase 7 CNN 전에 DNN으로 먼저 해본다.
+#   Chapter 5 CNN (예정) 전에 DNN으로 먼저 해본다.
 #
 # Ref: Coursera C2W2 Assignment / AI5 keras22
 # ============================================
 
 #0. 라이브러리 ──────────────────────────────
 from tensorflow.keras.models import Sequential     # Sequential: 레이어를 순서대로 쌓는 모델 구조
-from tensorflow.keras.layers import Dense, Flatten  # Dense: 완전 연결 레이어, Flatten: 다차원→1차원 변환 (여기선 미사용)
+from tensorflow.keras.layers import Dense           # Dense: 완전 연결 레이어 (28x28→784 펼치기는 아래 #2에서 reshape로 직접 한다)
 from tensorflow.keras.utils import to_categorical   # to_categorical: 정수 라벨→원핫 벡터 변환
 from tensorflow.keras.datasets import mnist         # MNIST: 손글씨 숫자 이미지 데이터셋 (0~9, 28x28 픽셀)
 from sklearn.metrics import accuracy_score          # accuracy_score: 정확도 계산
@@ -60,4 +60,5 @@ print(f"\n[ 평가 ]")
 print(f"Loss: {loss:.4f}")                                    # 손실값
 print(f"Accuracy: {acc:.4f}")                                  # 정확도
 print(f"\n→ DNN만으로도 MNIST {acc:.1%} 정확도")              # DNN으로도 꽤 높은 정확도 달성
-print(f"→ Phase 7 CNN으로 바꾸면 더 좋아진다")                 # CNN이 이미지 분류에 더 적합
+print(f"→ Chapter 5 CNN(예정, 손계산은 worksheets/handcalc_CNN.md)으로 바꾸면 더 좋아진다")  # CNN이 이미지 분류에 더 적합
+# 참고: sparse_categorical_crossentropy를 쓰면 OneHot 생략 가능 (4-6 iris 끝부분 참조)

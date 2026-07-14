@@ -1,13 +1,13 @@
 # ============================================
-# 2-5. 이진분류 — Breast Cancer (Sigmoid + BCE)
-# 이전(2-4)과 차이: #3에 sigmoid + loss='binary_crossentropy'
+# 4-5. 이진분류 — Breast Cancer (Sigmoid + BCE)
+# 이전(4-4)과 차이: #3에 sigmoid + loss='binary_crossentropy'
 #
 # 왜 배우는가:
 #   회귀(숫자 예측) → 이진분류(0 or 1).
-#   Phase 1-10 로지스틱 회귀를 DNN으로 확장.
+#   2-5 로지스틱 회귀를 DNN으로 확장.
 #
 # 나중에 만나는 곳:
-#   → Phase 7 CNN: 이미지 이진분류에 동일 구조
+#   → Chapter 5 CNN (예정, 손계산은 worksheets/): 이미지 이진분류에 동일 구조
 #
 # ▶ 보고 오기: Coursera C2W1 Lab02 "CoffeeRoasting"
 #

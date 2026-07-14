@@ -1,15 +1,15 @@
 # ============================================
-# 2-3. TF2/Keras 첫 코드 — 회귀
-# 이전과 차이: Phase 1 sklearn → 처음으로 TF2/Keras 사용
+# 4-3. TF2/Keras 첫 코드 — 회귀
+# 이전과 차이: Chapter 2~3 sklearn → 처음으로 TF2/Keras 사용
 #
 # 왜 배우는가:
 #   #0→#1→#2→#3→#4 구조를 처음 익힌다.
-#   Dense(1) = Phase 1-7 선형회귀와 같은 구조.
+#   Dense(1) = 2-2 선형회귀와 같은 구조.
 #   이 뼈대가 이후 모든 코드의 기반.
 #
 # 나중에 만나는 곳:
-#   → 2-4~2-8: 이 뼈대에서 한 섹션만 바뀜
-#   → Phase 3 이후 전체: 동일 구조
+#   → 4-4~4-8: 이 뼈대에서 한 섹션만 바뀜
+#   → 후속 챕터 전체: 동일 구조
 #
 # ▶ 보고 오기: 3B1B "Neural Networks" Ch.1~2
 #
@@ -108,7 +108,7 @@ axes[2].set_title('Residual Distribution')           # 제목: 잔차 분포
 axes[2].set_xlabel('Residual')                       # x축: 잔차 크기
 
 plt.tight_layout()                                   # 그래프 간 겹침 방지
-plt.savefig('2-3_output.png', dpi=100)               # 결과를 PNG로 저장
+plt.savefig('4-3_output.png', dpi=100)               # 결과를 PNG로 저장
 plt.show()                                           # 화면에 표시
 
 # ── 정리 ──────────────────────────────────
@@ -121,7 +121,7 @@ print("  #3 모델: Sequential → Dense → compile → fit")
 print("  #4 평가: evaluate + predict + r2_score")
 print("")
 print("  Dense(1) = 선형회귀와 같은 구조")
-print("  loss='mse' = Phase 1-8")
-print("  optimizer='adam' = Phase 1-9")
+print("  loss='mse' = 2-3")
+print("  optimizer='adam' = 2-4")
 print("  → 이 뼈대가 이후 모든 코드의 기반!")
 print("="*50)

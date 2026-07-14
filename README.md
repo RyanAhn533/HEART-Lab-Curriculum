@@ -49,27 +49,30 @@ Chapter 4:   딥러닝 입문 (TF2/Keras) ─── "신경망으로 확장한�
 
 ---
 
-## 7주 진행 계획
+## 8주 진행 계획 — 풀타임(9-to-6) 기준, 5주 커리큘럼 + 3주 프로젝트
 
-| 주차 | 내용 | Chapter |
-|------|------|---------|
-| **Week 1** | 통계 기초 + 데이터 탐색/전처리 | Ch.1 (1-1 ~ 1-5) |
-| **Week 2** | 상관분석 + 선형회귀 + 손실함수 + 경사하강법 | Ch.2 전반 (2-1 ~ 2-4) |
-| **Week 3** | 로지스틱 회귀 + 평가지표 + 과적합 | Ch.2 후반 (2-5 ~ 2-8) |
-| **Week 4** | 결정트리 + RF + SVM + KNN + 모델 비교 | Ch.3 전반 (3-1 ~ 3-5) |
-| **Week 5** | K-Means + PCA + ML 한계 → **수학 부트캠프 (손계산)** | Ch.3 후반 + **Ch.3.5** |
-| **Week 6** | 부트캠프 캡스톤(XOR) + TF2 실습 (회귀/분류/EarlyStopping) | Ch.3.5 + Ch.4 실습 |
-| **Week 7** | 종합 복습 + 자유 프로젝트 + 최종 발표 | 종합 |
+| 주차 | 내용 | 관문 |
+|------|------|------|
+| **W1** | 오리엔테이션 + 진단 → Ch.1 + B-4 → Ch.2 전반 (2-1~2-4) | GATE 1·2 |
+| **W2** | Ch.2 후반 (2-5~2-8) → Ch.3 전체 | ★ 시험 1 |
+| **W3** | 수학 부트캠프 (Ch.3.5) → Ch.4 + 4-7 혼자 짜보기 | GATE 3.5·4 |
+| **W4** | CNN 손계산+실습 → RNN/LSTM 손계산+실습 (AI5 레포) | — |
+| **W5** | 논문 4편 → ★ 시험 2 → 보충 버퍼 | ★ 시험 2 |
+| **W6~7** | 미니 연구 프로젝트 (처음 보는 데이터 end-to-end) | 중간 점검 |
+| **W8** | 프로젝트 마무리 + ★ 최종 발표 → 과제 투입 판정 | ★ 발표 |
+
+> 일정 상세는 [ROADMAP.md](ROADMAP.md), 관문·시험 스펙은 [CHECKPOINTS.md](CHECKPOINTS.md).
+> 파트타임(수업 병행)으로 돌리면 같은 내용이 12~16주.
 
 ---
 
 ## 대상별 시작점
 
-| 대상 | 시작 | 예상 기간 |
+| 대상 | 시작 | 예상 기간 (풀타임) |
 |------|------|----------|
-| 학부 3학년 (코딩 초보) | Chapter 1부터 | 7주 |
-| 타 도메인 석박 (통계O, 코딩X) | Chapter 1 빠르게 → Chapter 2 | 5~6주 |
-| CS 석사 (ML 경험O) | Chapter 3 or 4 | 3~4주 |
+| 파이썬 안 됨 (진단 Section C 불통과) | **Week 0: 파이썬 부트캠프 1주** → Chapter 1 | 9주 |
+| 학부 3~4학년 / 석사 신입 (표준) | Chapter 1부터 | 8주 |
+| ML 경험자 (진단 수학·코딩 80%↑) | Chapter 3 + 부트캠프 확인 후 Ch.4 | 4~5주 |
 
 ---
 
@@ -146,16 +149,20 @@ Chapter 4:   딥러닝 입문 (TF2/Keras) ─── "신경망으로 확장한�
 ```
 HEART-Lab-Curriculum/
 ├── README.md                           ← 이 파일
-├── CURRICULUM_MASTER.md                ← 전체 설계 문서
-├── DIAGNOSTIC_TEST.md                  ← 진단 테스트
-├── MANUAL.md                           ← 교육 운영 매뉴얼
+├── ROADMAP.md                          ← 학생용 지도 + 8주 스케줄
+├── CHECKPOINTS.md                      ← 관문(GATE)·시험·프로젝트 스펙
+├── DIAGNOSTIC_TEST.md                  ← 입구 진단 테스트
+├── PAPER_GUIDE.md                      ← 논문 7편 읽기 가이드
+├── MANUAL.md                           ← 교육 운영 매뉴얼 (교육자용)
+├── CURRICULUM_MASTER.md                ← 장기 설계 문서 (Phase 0~10 비전)
 │
 ├── Chapter01_statistics_data/          ← 통계 + 데이터
 │   ├── 1-1_기술통계          .md .py
 │   ├── 1-2_확률분포          .md .py
-│   ├── 1-3_EDA              .md .py
-│   ├── 1-4_결측치_이상치      .md .py
-│   └── 1-5_인코딩_스케일링    .md .py
+│   ├── 1-3_데이터도구        .md .py
+│   ├── 1-4_EDA              .md .py
+│   ├── 1-5_결측치_이상치      .md .py
+│   └── 1-6_인코딩_스케일링    .md .py
 │
 ├── Chapter02_prediction_classification/ ← 예측 + 분류
 │   ├── 2-1_상관분석          .md .py
@@ -190,18 +197,16 @@ HEART-Lab-Curriculum/
 │   ├── 4-1_뉴런과_신경망     .md
 │   ├── 4-2_활성화함수        .md .py
 │   ├── 4-3_TF2_첫코드_회귀   .md .py
-│   ├── 4-4_회귀_boston/diabetes  .py
+│   ├── 4-4_회귀_california/diabetes  .py
 │   ├── 4-5_이진분류_cancer       .py
 │   ├── 4-6_다중분류_iris/mnist   .py
+│   ├── 4-7_혼자짜기_5종데이터셋 .md  ← GATE 4 수행 과제
 │   └── 4-8_EarlyStopping    .md .py
 │
 ├── worksheets/                         ← 손계산 워크시트 (Ch.5~6 선행)
 │   ├── handcalc_CNN.md      ← Conv 출력크기·파라미터 수·MaxPool
 │   ├── handcalc_RNN_LSTM.md ← 언롤·기울기 소실·LSTM 게이트
 │   └── handcalc_ANSWERS.md  ← 교사용 답안
-│
-├── ROADMAP.md                          ← 전체 지도 (학생용)
-├── PAPER_GUIDE.md                      ← 논문 7편 읽기 가이드
 │
 ├── _archive/                           ← 이전 버전 (참고용)
 └── AI5-main/                           ← 원본 학습 코드

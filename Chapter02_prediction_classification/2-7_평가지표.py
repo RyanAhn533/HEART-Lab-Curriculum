@@ -1,12 +1,12 @@
 # ============================================
-# 1-12. 평가지표 (Evaluation Metrics)
+# 2-7. 평가지표 (Evaluation Metrics)
 #
 # 왜 배우는가:
 #   "모델이 잘 했는가?"를 판단하는 기준.
 #   Accuracy만 보면 큰 실수를 할 수 있다.
 #
 # 나중에 만나는 곳:
-#   → Phase 5~6: 분류 모델 평가
+#   → Chapter 4: 분류 모델 평가
 #   → 논문 결과표: Accuracy, F1, AUC
 #
 # ▶ 보고 오기: StatQuest "ROC and AUC"
@@ -61,8 +61,18 @@ print(f"  Precision: {prec:.4f}  (양성 예측 중 진짜 양성)")
 print(f"  Recall:    {rec:.4f}  (진짜 양성 중 찾은 비율)")
 print(f"  F1 Score:  {f1:.4f}  (Precision과 Recall의 균형)")
 
+# 주의: 이 데이터는 target 1=benign(양성종양), 0=malignant(악성)이고,
+# sklearn 기본은 1을 positive로 계산한다. "암을 놓치지 않기" 서사로 보려면 pos_label=0으로 뒤집어야 한다.
+prec_mal = precision_score(y_test, y_pred, pos_label=0)  # pos_label=0: 악성을 positive로 계산
+rec_mal = recall_score(y_test, y_pred, pos_label=0)      # 악성 Recall = 실제 암 환자 중 찾아낸 비율
+print(f"\n[ 악성(0)을 positive로 — 암 진단 서사 ]")
+print(f"  Precision(악성): {prec_mal:.4f}")
+print(f"  Recall(악성):    {rec_mal:.4f}  ← '암을 놓치지 않는' 그 Recall은 이 값")
+
 print(f"\n[ classification_report — 실무에서 이걸 쓴다 ]")
 print(classification_report(y_test, y_pred, target_names=['Malignant', 'Benign']))  # 클래스별 precision/recall/f1을 표로 출력
+# ↑ 아래쪽 macro avg = 클래스별 단순 평균 (소수 클래스 동등), weighted avg = 샘플 수 가중 평균 (다수 클래스에 끌려감)
+# ↑ 불균형 자체를 다루는 방법(class_weight='balanced', 리샘플링)은 Chapter 9에서
 
 # ── 4. ROC / AUC ─────────────────────────
 fpr, tpr, thresholds = roc_curve(y_test, y_prob)       # roc_curve: threshold를 바꿔가며 FPR(x축), TPR(y축) 계산
@@ -136,7 +146,7 @@ axes[1, 2].set_title('Predicted Probability Distribution')  # 제목: 예측 확
 axes[1, 2].legend()                                    # 범례
 
 plt.tight_layout()                                     # 그래프 간 간격 자동 조정
-plt.savefig('1-12_output.png', dpi=100)               # 이미지 파일로 저장
+plt.savefig('2-7_output.png', dpi=100)               # 이미지 파일로 저장
 plt.show()                                             # 화면에 표시
 
 # ── 정리 ──────────────────────────────────

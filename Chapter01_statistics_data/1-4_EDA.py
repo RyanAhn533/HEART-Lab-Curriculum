@@ -1,14 +1,14 @@
 # ============================================
-# 1-3. 데이터 탐색 (EDA: Exploratory Data Analysis)
+# 1-4. 데이터 탐색 (EDA: Exploratory Data Analysis)
 #
 # 왜 배우는가:
 #   모델에 넣기 전에 "눈으로 먼저 보는 것".
 #   실무에서 가장 많은 시간을 쓰는 단계.
 #
 # 나중에 만나는 곳:
-#   → 모든 Phase의 #1: 데이터 로드 후 가장 먼저
-#   → 1-5 인코딩: 범주형 데이터 변환
-#   → 1-6 상관분석: heatmap
+#   → 모든 Chapter의 #1: 데이터 로드 후 가장 먼저
+#   → 1-6 인코딩: 범주형 데이터 변환
+#   → 2-1 상관분석: heatmap
 #
 # ▶ 보고 오기: 구글 "pandas EDA 실습"
 #
@@ -63,9 +63,9 @@ axes[0, 1].set_title('MedInc (Median Income)')       # 제목: 중위 소득
 
 # 박스플롯 (이상치 확인)
 axes[0, 2].boxplot([df['MedInc'], df['HouseAge'], df['AveRooms']],
-                    labels=['MedInc', 'HouseAge', 'AveRooms'])
+                    tick_labels=['MedInc', 'HouseAge', 'AveRooms'])
 # ↑ boxplot: 상자그림 — 중앙값, 사분위수, 이상치(동그라미 점)를 한눈에 보여줌
-# ↑ 3개 변수를 나란히 비교. labels=각 상자의 이름표
+# ↑ 3개 변수를 나란히 비교. tick_labels=각 상자의 이름표 (matplotlib 3.9+에서 labels→tick_labels로 변경)
 axes[0, 2].set_title('Box Plot (Outlier Check)')     # 제목: 이상치 확인용 상자그림
 
 # Scatter (두 변수 관계)
@@ -77,7 +77,7 @@ axes[1, 0].set_ylabel('Price')                        # y축: 집값
 axes[1, 0].set_title('MedInc vs Price')              # 제목: 소득 vs 집값 관계
 
 # 상관관계 Heatmap
-corr = df.corr()                 # corr(): 모든 열 쌍의 상관계수 계산 (-1~+1). 1에 가까우면 양의 상관, -1에 가까우면 음의 상관
+corr = df.corr()                 # corr(): 모든 열 쌍의 상관계수 계산 (-1~+1). 1에 가까우면 양의 상관, -1에 가까우면 음의 상관 (자세한 건 2-1에서)
 sns.heatmap(corr, annot=True, fmt='.2f', cmap='coolwarm',
             center=0, ax=axes[1, 1], annot_kws={'size': 7})
 # ↑ heatmap: 상관계수를 색깔로 시각화. annot=True→숫자 표시, fmt='.2f'→소수점 2자리
@@ -94,7 +94,7 @@ axes[1, 2].set_title('Correlation with Price')       # 제목: 집값과의 상�
 axes[1, 2].set_xlabel('Correlation')                  # x축: 상관계수
 
 plt.tight_layout()               # 차트 간 간격 자동 조정 — 겹치지 않게
-plt.savefig('1-3_output.png', dpi=100)  # 그래프를 이미지 파일로 저장. dpi=해상도
+plt.savefig('1-4_output.png', dpi=100)  # 그래프를 이미지 파일로 저장. dpi=해상도
 plt.show()                       # 화면에 그래프 표시
 
 # ── 4. EDA 체크리스트 결과 ────────────────
